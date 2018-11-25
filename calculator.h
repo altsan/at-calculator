@@ -93,7 +93,7 @@ private:
     void    setCurrentDisplayValue( long long value );
     bool    calculate( double rightOperand, const QString &pendingOperator );
     void    updateAltRepr();
-    void    showLayout( const QLayout *layout, bool visible );
+    int     showLayout( const QLayout *layout, bool visible );
     QString findFont( const QString fontFamily );
     void    readSettings();
     void    writeSettings();
@@ -107,6 +107,9 @@ private:
     QFont btnFont;
     QFont editFont;
     bool isHexMode;
+
+    enum { Standard = 0, Scientific = 1, Programming = 2, All = 3 };
+    short currentView;
 
     QLineEdit *display;
     QLabel *reprName;

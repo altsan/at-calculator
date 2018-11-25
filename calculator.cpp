@@ -62,6 +62,7 @@ Calculator::Calculator( QWidget *parent )
     factorSoFar = 0.0;
     waitingForOperand = true;
     isHexMode = false;
+    currentView = Standard;
 
     // Create the entryfield
 
@@ -91,12 +92,14 @@ Calculator::Calculator( QWidget *parent )
     viewSelector->addItem( tr("Scientific"),  Qt::DisplayRole );
     viewSelector->addItem( tr("Programming"), Qt::DisplayRole );
     viewSelector->addItem( tr("All"),         Qt::DisplayRole );
-    connect( viewSelector, SIGNAL( currentIndexChanged( const QString & )), this, SLOT( viewChanged( const QString & )));
+    viewSelector->setFocusPolicy( Qt::TabFocus );
+    connect( viewSelector, SIGNAL( activated( const QString & )), this, SLOT( viewChanged( const QString & )));
 
     modeSelector = new QComboBox( this );
     modeSelector->addItem( tr("Decimal"),     Qt::DisplayRole );
     modeSelector->addItem( tr("Hexadecimal"), Qt::DisplayRole );
-    connect( modeSelector, SIGNAL( currentIndexChanged( const QString & )), this, SLOT( modeChanged( const QString & )));
+    modeSelector->setFocusPolicy( Qt::TabFocus );
+    connect( modeSelector, SIGNAL( activated( const QString & )), this, SLOT( modeChanged( const QString & )));
 
     // Create the action buttons
 
@@ -177,7 +180,7 @@ Calculator::Calculator( QWidget *parent )
     equalButton->setPalette( palOps );
 
     QPalette palSci = squareButton->palette();
-    palSci.setColor( QPalette::Button, QColor("#90A8C8"));
+    palSci.setColor( QPalette::Button, QColor("#A0B0C8"));
     squareButton->setPalette( palSci );
     reciprocalButton->setPalette( palSci );
     expButton->setPalette( palSci );
@@ -255,7 +258,6 @@ Calculator::Calculator( QWidget *parent )
     sciLayout->addWidget( nRootButton, 3, 1 );
     sciLayout->addWidget( piButton, 4, 1 );
     sciLayout->setSpacing( 6 );
-    showLayout( sciLayout, false );
 
     // Programming button area
     //
@@ -267,15 +269,23 @@ Calculator::Calculator( QWidget *parent )
     proLayout->addWidget( bitOrButton,    3, 0 );
     proLayout->addWidget( bitXorButton,   4, 0 );
     proLayout->setSpacing( 6 );
-    showLayout( proLayout, false );
 
-    // Sections layout holding all the above button areas
+    viewSelector->setCurrentIndex( currentView );
+    if ( currentView == Programming || currentView == Standard )
+        showLayout( sciLayout, false );
+    if ( currentView == Scientific || currentView == Standard )
+        showLayout( proLayout, false );
+
+    modeSelector->setCurrentIndex( (int) isHexMode );
+
+    // Section layout holding all the above button areas
+    //
 
     QHBoxLayout *secLayout = new QHBoxLayout;
     secLayout->setSpacing( 16 );
-    secLayout->addLayout( proLayout );
-    secLayout->addLayout( sciLayout );
-    secLayout->addLayout( mainLayout );
+    secLayout->addLayout( proLayout,  1 );
+    secLayout->addLayout( sciLayout,  2 );
+    secLayout->addLayout( mainLayout, 6 );
 
     // Now the root-level layout
     //
@@ -665,20 +675,37 @@ void Calculator::modeChanged( const QString &text )
 //
 void Calculator::viewChanged( const QString &text )
 {
-    bool scientific = false;
-    bool programming = false;
+    bool  scientific  = false;
+    bool  programming = false;
+    int   widthAdjust = 0;
+/*
+    QSize windowSize = size();
+    QSize minSize = minimumSize();
+*/
 
-    if ( text == tr("Scientific"))
+    if ( text == tr("Scientific")) {
         scientific = true;
-    if ( text == tr("Programming"))
+        currentView = Scientific;
+    }
+    else if ( text == tr("Programming")) {
         programming = true;
+        currentView = Programming;
+    }
     else if ( text == tr("All")) {
         scientific  = true;
         programming = true;
+        currentView = All;
     }
-    showLayout( sciLayout, scientific );
-    showLayout( proLayout, programming );
-    update();
+    else currentView = Standard;
+
+    widthAdjust += showLayout( sciLayout, scientific );
+    widthAdjust += showLayout( proLayout, programming );
+/*
+    windowSize.rwidth() += widthAdjust;
+    minSize.rwidth() += widthAdjust;
+    setMinimumSize( minSize );
+    resize( windowSize );
+*/
 }
 
 
@@ -879,13 +906,27 @@ void Calculator::updateAltRepr()
 // ---------------------------------------------------------------------------
 //
 //
-void Calculator::showLayout( const QLayout *layout, bool visible )
+int Calculator::showLayout( const QLayout *layout, bool visible )
 {
+    int widthAdjust = 0;
+/*
+    if ( !visible ) {
+        // we will be hiding this layout; find how much width to subtract
+        widthAdjust -= layout->contentsRect().width();
+    }
+*/
     for ( int i = 0; i < layout->count(); i++ ) {
         QWidget *control = layout->itemAt( i )->widget();
         if ( control )
             control->setVisible( visible );
     }
+/*
+    if ( visible ) {
+        // we are showing this layout; find how much width to add
+        widthAdjust = layout->minimumSize().width();
+    }
+*/
+    return widthAdjust;
 }
 
 
@@ -898,6 +939,8 @@ void Calculator::readSettings()
 
     reprName->setText( isHexMode? "DEC:": "HEX:");
 
+    currentView = (short) settings.value("view").toInt();
+    isHexMode = settings.value("mode").toBool();
     restoreGeometry( settings.value("geometry").toByteArray() );
 
     // Set up fonts
@@ -912,7 +955,9 @@ void Calculator::readSettings()
     btnFont = editFont;
     editFont.setPointSize( editFont.pointSize() + 8 );
 
-    foundFont = findFont("Source Sans Pro");
+    foundFont = findFont("Helvetica");
+    if ( !foundFont.isEmpty() )
+        foundFont = findFont("Source Sans Pro");
     if ( !foundFont.isEmpty() ) {
         btnFont.setPointSize( btnFont.pointSize() + 2 );
         btnFont.setFamily( foundFont );
@@ -936,6 +981,8 @@ void Calculator::writeSettings()
     settings.setValue("geometry",   saveGeometry() );
     settings.setValue("editFont",   editFont.toString() );
     settings.setValue("buttonFont", btnFont.toString() );
+    settings.setValue("view",       currentView );
+    settings.setValue("mode",       isHexMode );
 }
 
 
