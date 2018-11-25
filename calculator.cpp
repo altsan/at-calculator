@@ -78,8 +78,6 @@ Calculator::Calculator( QWidget *parent )
     reprLabel->setAlignment( Qt::AlignRight );
     reprLabel->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed );
 
-    readSettings();
-
 /*
     Button *modeButton = createButton( tr("Hexadecimal"), "Hexadecimal", SLOT( modeClicked() ));
     QFontMetrics fm( modeButton->font() );
@@ -270,14 +268,6 @@ Calculator::Calculator( QWidget *parent )
     proLayout->addWidget( bitXorButton,   4, 0 );
     proLayout->setSpacing( 6 );
 
-    viewSelector->setCurrentIndex( currentView );
-    if ( currentView == Programming || currentView == Standard )
-        showLayout( sciLayout, false );
-    if ( currentView == Scientific || currentView == Standard )
-        showLayout( proLayout, false );
-
-    modeSelector->setCurrentIndex( (int) isHexMode );
-
     // Section layout holding all the above button areas
     //
 
@@ -296,6 +286,16 @@ Calculator::Calculator( QWidget *parent )
     rootLayout->addWidget( reprLabel, 1, 1 );
     rootLayout->addLayout( secLayout, 2, 0, 1, 2 );
     setLayout( rootLayout );
+
+    readSettings();
+
+    viewSelector->setCurrentIndex( currentView );
+    if ( currentView == Programming || currentView == Standard )
+        showLayout( sciLayout, false );
+    if ( currentView == Scientific || currentView == Standard )
+        showLayout( proLayout, false );
+
+    modeSelector->setCurrentIndex( (int) isHexMode );
 
     display->setFocus( Qt::ActiveWindowFocusReason );
     setWindowTitle( tr("Calculator"));
@@ -734,7 +734,7 @@ Button *Calculator::createButton( const QString &text,
                                   const char *member )
 {
     Button *button = new Button( text );
-    button->setFont( btnFont );
+//  button->setFont( btnFont );
     button->setIdentity( identity );
     connect( button, SIGNAL(clicked()), this, member );
     return button;
@@ -758,6 +758,18 @@ Button *Calculator::createButton( const QString &text,
     Button *button = createButton( text, identity, member );
     button->setShortcut( key );
     return button;
+}
+
+
+// ---------------------------------------------------------------------------
+//
+//
+void Calculator::setButtonFont( const QFont &font )
+{
+    QList<Button *>allButtons = findChildren<Button *>();
+    foreach( Button *b, allButtons ) {
+        b->setFont( font );
+    }
 }
 
 
@@ -956,7 +968,7 @@ void Calculator::readSettings()
     editFont.setPointSize( editFont.pointSize() + 8 );
 
     foundFont = findFont("Helvetica");
-    if ( !foundFont.isEmpty() )
+    if ( foundFont.isEmpty() )
         foundFont = findFont("Source Sans Pro");
     if ( !foundFont.isEmpty() ) {
         btnFont.setPointSize( btnFont.pointSize() + 2 );
@@ -968,6 +980,7 @@ void Calculator::readSettings()
 */
 
     display->setFont( editFont );
+    setButtonFont( btnFont );
 }
 
 

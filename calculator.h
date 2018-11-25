@@ -87,6 +87,7 @@ private:
     Button *createButton( const QString &text, const QString &identity, const char *member );
     Button *createButton( const QString &text, const QString &identity, QKeySequence::StandardKey key, const char *member );
     Button *createButton( const QString &text, const QString &identity, const QString &key, const char *member );
+    void    setButtonFont( const QFont &font );
     void    abortOperation();
     double  currentDisplayValue();
     void    setCurrentDisplayValue( double value );
