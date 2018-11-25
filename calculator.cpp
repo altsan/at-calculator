@@ -153,10 +153,17 @@ Calculator::Calculator( QWidget *parent )
     Button *bitOrButton      = createButton( tr("|"),           "|",      SLOT( multiplicativeOperatorClicked() ));
     Button *bitXorButton     = createButton( tr("^"),           "^",      SLOT( multiplicativeOperatorClicked() ));
 
+    // Set the button colours
+    //
+
     QPalette palClr = clearAllButton->palette();
-    palClr.setColor( QPalette::Button, QColor("#A04040"));
-    palClr.setColor( QPalette::ButtonText, QColor("#FFFFFF"));
+    palClr.setColor( QPalette::Button, QColor("#A0A0A0"));
+    palClr.setColor( QPalette::ButtonText, QColor("#800000"));
     clearAllButton->setPalette( palClr );
+
+    palClr.setColor( QPalette::ButtonText, QColor("#000000"));
+    clearButton->setPalette( palClr );
+    backspaceButton->setPalette( palClr );
 
     QPalette palMem = clearMemoryButton->palette();
     palMem.setColor( QPalette::Button, QColor("#A8C8A8"));
@@ -167,8 +174,6 @@ Calculator::Calculator( QWidget *parent )
 
     QPalette palOps = equalButton->palette();
     palOps.setColor( QPalette::Button, QColor("#A8A8A8"));
-    clearButton->setPalette( palOps );
-    backspaceButton->setPalette( palOps );
     squareRootButton->setPalette( palOps );
     moduloButton->setPalette( palOps );
     divisionButton->setPalette( palOps );
@@ -236,11 +241,7 @@ Calculator::Calculator( QWidget *parent )
 
     mainLayout->addWidget( moduloButton, 4, 5 );
     mainLayout->addWidget( squareRootButton, 5, 5 );
-/*
-    mainLayout->addItem( new QSpacerItem( 1, 16 ), 8, 0 );
-    mainLayout->addWidget( viewSelector, 9, 0, 1, 3 );
-    mainLayout->addWidget( modeSelector, 9, 3, 1, 3 );
-*/
+
     // Scientific button area
     //
 

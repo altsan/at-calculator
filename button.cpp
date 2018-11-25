@@ -53,7 +53,7 @@ Button::Button( const QString &text, const QString &identity, QWidget *parent )
 {
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Preferred );
     setText( text );
-    setIdentity( identityString );
+    setIdentity( identity );
 }
 
 QSize Button::sizeHint() const
