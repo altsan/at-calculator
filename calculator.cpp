@@ -57,14 +57,19 @@
 Calculator::Calculator( QWidget *parent )
     : QDialog( parent, Qt::WindowMinimizeButtonHint )
 {
+    // Initialize calculation status
     sumInMemory = 0.0;
     sumSoFar    = 0.0;
     factorSoFar = 0.0;
     waitingForOperand = true;
+
+    // Initialize option fields
     isHexMode = false;
+    isGrey    = false;
     currentView = Standard;
 
-    // Create the entryfield
+    // Create the entryfield and alternate-representation labels
+    //
 
     display = new QLineEdit("0");
     display->setReadOnly( true );
@@ -125,7 +130,7 @@ Calculator::Calculator( QWidget *parent )
     Button *readMemoryButton  = createButton( tr("MR"),         "MR",     SLOT( readMemory() ));
     Button *setMemoryButton   = createButton( tr("MS"),         "MS",     SLOT( setMemory() ));
     Button *addToMemoryButton = createButton( tr("M+"),         "M+",     SLOT( addToMemory() ));
-//  Button *subFromMemoryButton = createButton( tr("M-"),       "M-",     SLOT(subFromMemory() ));
+//  Button *subFromMemoryButton = createButton( tr("M-"),       "M-",     SLOT( subFromMemory() ));
 
     Button *divisionButton   = createButton( tr("\367"),        "/",      "/", SLOT(multiplicativeOperatorClicked() ));
     Button *timesButton      = createButton( tr("\327"),        "*",      "*", SLOT(multiplicativeOperatorClicked() ));
@@ -153,59 +158,9 @@ Calculator::Calculator( QWidget *parent )
     Button *bitOrButton      = createButton( tr("|"),           "|",      SLOT( multiplicativeOperatorClicked() ));
     Button *bitXorButton     = createButton( tr("^"),           "^",      SLOT( multiplicativeOperatorClicked() ));
 
-    // Set the button colours
+    // Lay out the controls
     //
-
-    QPalette palClr = clearAllButton->palette();
-    palClr.setColor( QPalette::Button, QColor("#A0A0A0"));
-    palClr.setColor( QPalette::ButtonText, QColor("#800000"));
-    clearAllButton->setPalette( palClr );
-
-    palClr.setColor( QPalette::ButtonText, QColor("#000000"));
-    clearButton->setPalette( palClr );
-    backspaceButton->setPalette( palClr );
-
-    QPalette palMem = clearMemoryButton->palette();
-    palMem.setColor( QPalette::Button, QColor("#A8C8A8"));
-    clearMemoryButton->setPalette( palMem );
-    readMemoryButton->setPalette( palMem );
-    setMemoryButton->setPalette( palMem );
-    addToMemoryButton->setPalette( palMem );
-
-    QPalette palOps = equalButton->palette();
-    palOps.setColor( QPalette::Button, QColor("#A8A8A8"));
-    squareRootButton->setPalette( palOps );
-    moduloButton->setPalette( palOps );
-    divisionButton->setPalette( palOps );
-    timesButton->setPalette( palOps );
-    minusButton->setPalette( palOps );
-    plusButton->setPalette( palOps );
-    equalButton->setPalette( palOps );
-
-    QPalette palSci = squareButton->palette();
-    palSci.setColor( QPalette::Button, QColor("#A0B0C8"));
-    squareButton->setPalette( palSci );
-    reciprocalButton->setPalette( palSci );
-    expButton->setPalette( palSci );
-    nRootButton->setPalette( palSci );
-    piButton->setPalette( palSci );
-    sinButton->setPalette( palSci );
-    cosButton->setPalette( palSci );
-    tanButton->setPalette( palSci );
-    logButton->setPalette( palSci );
-    lnButton->setPalette( palSci );
-
-    QPalette palPro = bitOrButton->palette();
-    palPro.setColor( QPalette::Button, QColor("#C8C8A8"));
-    bitLeftButton->setPalette( palPro );
-    bitRightButton->setPalette( palPro );
-    bitAndButton->setPalette( palPro );
-    bitOrButton->setPalette( palPro );
-    bitXorButton->setPalette( palPro );
-
-
     // Main (always-visible) button area
-    //
 
     QGridLayout *mainLayout = new QGridLayout;
     mainLayout->setSpacing( 6 );
@@ -243,7 +198,6 @@ Calculator::Calculator( QWidget *parent )
     mainLayout->addWidget( squareRootButton, 5, 5 );
 
     // Scientific button area
-    //
 
     sciLayout = new QGridLayout;
     sciLayout->addWidget( sinButton, 0, 0 );
@@ -259,7 +213,6 @@ Calculator::Calculator( QWidget *parent )
     sciLayout->setSpacing( 6 );
 
     // Programming button area
-    //
 
     proLayout = new QGridLayout;
     proLayout->addWidget( bitLeftButton,  0, 0 );
@@ -270,7 +223,6 @@ Calculator::Calculator( QWidget *parent )
     proLayout->setSpacing( 6 );
 
     // Section layout holding all the above button areas
-    //
 
     QHBoxLayout *secLayout = new QHBoxLayout;
     secLayout->setSpacing( 16 );
@@ -279,7 +231,7 @@ Calculator::Calculator( QWidget *parent )
     secLayout->addLayout( mainLayout, 6 );
 
     // Now the root-level layout
-    //
+
     QGridLayout *rootLayout = new QGridLayout;
     rootLayout->addWidget( display, 0, 0, 1, 2 );
     rootLayout->addWidget( reprName, 1, 0 );
@@ -293,7 +245,56 @@ Calculator::Calculator( QWidget *parent )
 
     setLayout( rootLayout );
 
+    // Load settings and set up the UI accordingly
+    //
     readSettings();
+
+    // Button colours
+
+    QPalette pal = clearAllButton->palette();
+    pal.setColor( QPalette::Button, QColor("#A0A0A0"));
+    pal.setColor( QPalette::ButtonText, QColor("#800000"));
+    clearAllButton->setPalette( pal );
+
+    pal.setColor( QPalette::ButtonText, QColor("#000000"));
+    clearButton->setPalette( pal );
+    backspaceButton->setPalette( pal );
+
+    if ( !isGrey ) pal.setColor( QPalette::Button, QColor("#A8C8A8"));
+    clearMemoryButton->setPalette( pal );
+    readMemoryButton->setPalette( pal );
+    setMemoryButton->setPalette( pal );
+    addToMemoryButton->setPalette( pal );
+
+    pal.setColor( QPalette::Button, QColor("#A8A8A8"));
+    squareRootButton->setPalette( pal );
+    moduloButton->setPalette( pal );
+    divisionButton->setPalette( pal );
+    timesButton->setPalette( pal );
+    minusButton->setPalette( pal );
+    plusButton->setPalette( pal );
+    equalButton->setPalette( pal );
+
+    if ( !isGrey ) pal.setColor( QPalette::Button, QColor("#A0B0C8"));
+    squareButton->setPalette( pal );
+    reciprocalButton->setPalette( pal );
+    expButton->setPalette( pal );
+    nRootButton->setPalette( pal );
+    piButton->setPalette( pal );
+    sinButton->setPalette( pal );
+    cosButton->setPalette( pal );
+    tanButton->setPalette( pal );
+    logButton->setPalette( pal );
+    lnButton->setPalette( pal );
+
+    if ( !isGrey ) pal.setColor( QPalette::Button, QColor("#C8C8A8"));
+    bitLeftButton->setPalette( pal );
+    bitRightButton->setPalette( pal );
+    bitAndButton->setPalette( pal );
+    bitOrButton->setPalette( pal );
+    bitXorButton->setPalette( pal );
+
+    // Combo-box selections
 
     viewSelector->setCurrentIndex( currentView );
     if ( currentView == Programming || currentView == Standard )
@@ -302,6 +303,8 @@ Calculator::Calculator( QWidget *parent )
         showLayout( proLayout, false );
 
     modeSelector->setCurrentIndex( (int) isHexMode );
+
+    // Finish up
 
     display->setFocus( Qt::ActiveWindowFocusReason );
     setWindowTitle( tr("Calculator"));

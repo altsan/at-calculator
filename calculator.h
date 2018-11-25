@@ -108,6 +108,7 @@ private:
     QFont btnFont;
     QFont editFont;
     bool isHexMode;
+    bool isGrey;
 
     enum { Standard = 0, Scientific = 1, Programming = 2, All = 3 };
     short currentView;
