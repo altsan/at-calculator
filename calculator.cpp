@@ -100,7 +100,7 @@ Calculator::Calculator( QWidget *parent )
     connect( modeSelector, SIGNAL( activated( const QString & )), this, SLOT( modeChanged( const QString & )));
 
     // Create the action buttons
-
+    //
     for ( int i = 0; i < NumDigitButtons; ++i ) {
         digitButtons[i] = createButton( QString::number( i ),
                                         QString::number( i ),
@@ -236,11 +236,11 @@ Calculator::Calculator( QWidget *parent )
 
     mainLayout->addWidget( moduloButton, 4, 5 );
     mainLayout->addWidget( squareRootButton, 5, 5 );
-
+/*
     mainLayout->addItem( new QSpacerItem( 1, 16 ), 8, 0 );
     mainLayout->addWidget( viewSelector, 9, 0, 1, 3 );
     mainLayout->addWidget( modeSelector, 9, 3, 1, 3 );
-
+*/
     // Scientific button area
     //
 
@@ -285,6 +285,11 @@ Calculator::Calculator( QWidget *parent )
 //    rootLayout->addWidget( modeButton, 1, 0 );
     rootLayout->addWidget( reprLabel, 1, 1 );
     rootLayout->addLayout( secLayout, 2, 0, 1, 2 );
+
+    rootLayout->addItem( new QSpacerItem( 1, 16 ), 3, 0 );
+    rootLayout->addWidget( viewSelector, 4, 0 );
+    rootLayout->addWidget( modeSelector, 4, 1 );
+
     setLayout( rootLayout );
 
     readSettings();
@@ -560,15 +565,15 @@ void Calculator::backspaceClicked()
         return;
 
     QString text = display->text();
-    text.chop(1);
-    if (text.isEmpty()) {
+    text.chop( 1 );
+    if ( text.isEmpty() ) {
         text = "0";
         waitingForOperand = true;
     }
     if ( isHexMode )
         setCurrentDisplayValue( text.toLongLong( NULL, 16 ));
     else {
-        display->setText(text);
+        display->setText( text );
         updateAltRepr();
     }
 }
@@ -957,27 +962,23 @@ void Calculator::readSettings()
 
     // Set up fonts
     editFont = display->font();
-
-    QString foundFont = findFont("Inconsolata");
+    QString foundFont = findFont("Consolas");
+    if ( foundFont.isEmpty() )
+        QString foundFont = findFont("Inconsolata");
     if ( foundFont.isEmpty() )
         foundFont = findFont("Source Code Pro");
-    if ( !foundFont.isEmpty() )
-        editFont.setFamily( foundFont );
+    if ( foundFont.isEmpty() )
+        foundFont = "Workplace Sans";
+    editFont.fromString( settings.value("editFont", foundFont + ",18").toString() );
 
     btnFont = editFont;
-    editFont.setPointSize( editFont.pointSize() + 8 );
-
+    //btnFont.setPointSize( editFont.pointSize() + 8 );
     foundFont = findFont("Helvetica");
     if ( foundFont.isEmpty() )
         foundFont = findFont("Source Sans Pro");
-    if ( !foundFont.isEmpty() ) {
-        btnFont.setPointSize( btnFont.pointSize() + 2 );
-        btnFont.setFamily( foundFont );
-    }
-/*
-    QFont font("");
-    font.fromString( settings.value("editFont", editFont ).toString() );
-*/
+    if ( foundFont.isEmpty() )
+        foundFont = "Workplace Sans";
+    btnFont.fromString( settings.value("buttonFont", foundFont + ",12").toString() );
 
     display->setFont( editFont );
     setButtonFont( btnFont );
