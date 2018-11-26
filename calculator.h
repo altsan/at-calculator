@@ -50,6 +50,7 @@ class QLineEdit;
 class QLabel;
 class QComboBox;
 class QGridLayout;
+class QMenu;
 QT_END_NAMESPACE
 class Button;
 
@@ -62,6 +63,7 @@ public:
 
 protected:
     void closeEvent( QCloseEvent *event );
+    void contextMenuEvent( QContextMenuEvent *event );
 
 private slots:
     void modeClicked();
@@ -82,12 +84,17 @@ private slots:
     void subFromMemory();
     void modeChanged( const QString &text );
     void viewChanged( const QString &text );
+    void greyChanged();
+    void buttonFontChanged();
+    void displayFontChanged();
+    void about();
 
 private:
     Button *createButton( const QString &text, const QString &identity, const char *member );
     Button *createButton( const QString &text, const QString &identity, QKeySequence::StandardKey key, const char *member );
     Button *createButton( const QString &text, const QString &identity, const QString &key, const char *member );
     void    setButtonFont( const QFont &font );
+    void    setColourScheme();
     void    abortOperation();
     double  currentDisplayValue();
     void    setCurrentDisplayValue( double value );
@@ -105,8 +112,6 @@ private:
     QString pendingAdditiveOperator;
     QString pendingMultiplicativeOperator;
     bool waitingForOperand;
-    QFont btnFont;
-    QFont editFont;
     bool isHexMode;
     bool isGrey;
 
@@ -120,11 +125,47 @@ private:
     QComboBox *viewSelector;
     QGridLayout *sciLayout;
     QGridLayout *proLayout;
+    QMenu   *styleMenu;
+    QAction *monochromeAction;
+    QAction *displayFontAction;
+    QAction *buttonFontAction;
+    QAction *aboutAction;
 
     enum { NumDigitButtons = 10 };
     enum { NumHexButtons = 6 };
     Button *digitButtons[ NumDigitButtons ];
     Button *hexButtons[ NumHexButtons ];
+    Button *pointButton;
+    Button *changeSignButton;
+    Button *backspaceButton;
+    Button *clearButton;
+    Button *clearAllButton;
+    Button *clearMemoryButton;
+    Button *readMemoryButton;
+    Button *setMemoryButton;
+    Button *addToMemoryButton;
+    Button *divisionButton;
+    Button *timesButton;
+    Button *minusButton;
+    Button *plusButton;
+    Button *equalButton;
+    Button *moduloButton;
+    Button *squareRootButton;
+    Button *reciprocalButton;
+    Button *squareButton;
+    Button *expButton;
+    Button *nRootButton;
+    Button *logButton;
+    Button *lnButton;
+    Button *piButton;
+    Button *sinButton;
+    Button *cosButton;
+    Button *tanButton;
+    Button *bitLeftButton;
+    Button *bitRightButton;
+    Button *bitAndButton;
+    Button *bitOrButton;
+    Button *bitXorButton;
 
 };
 

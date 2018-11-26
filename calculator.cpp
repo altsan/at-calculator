@@ -119,44 +119,64 @@ Calculator::Calculator( QWidget *parent )
                                       SLOT( digitClicked() ));
     }
 
-    Button *pointButton      = createButton( tr("."),           ".",      ".",  SLOT( pointClicked() ));
-    Button *changeSignButton = createButton( tr("\261"),        "+-",     SLOT( changeSignClicked() ));
+    pointButton      = createButton( tr("."),           ".",      ".",  SLOT( pointClicked() ));
+    changeSignButton = createButton( tr("\261"),        "+-",     SLOT( changeSignClicked() ));
 
-    Button *backspaceButton  = createButton( trUtf8("← Back"),"BACK",   QKeySequence( Qt::Key_Backspace ), SLOT( backspaceClicked() ));
-    Button *clearButton      = createButton( tr("CE"),          "CE",     QKeySequence::DeleteStartOfWord,   SLOT( clear() ));
-    Button *clearAllButton   = createButton( tr("AC"),          "AC",     SLOT( clearAll() ));
+    backspaceButton  = createButton( trUtf8("← Back"),"BACK",   QKeySequence( Qt::Key_Backspace ), SLOT( backspaceClicked() ));
+    clearButton      = createButton( tr("CE"),          "CE",     QKeySequence::DeleteStartOfWord,   SLOT( clear() ));
+    clearAllButton   = createButton( tr("AC"),          "AC",     SLOT( clearAll() ));
 
-    Button *clearMemoryButton = createButton( tr("MC"),         "MC",     SLOT( clearMemory() ));
-    Button *readMemoryButton  = createButton( tr("MR"),         "MR",     SLOT( readMemory() ));
-    Button *setMemoryButton   = createButton( tr("MS"),         "MS",     SLOT( setMemory() ));
-    Button *addToMemoryButton = createButton( tr("M+"),         "M+",     SLOT( addToMemory() ));
-//  Button *subFromMemoryButton = createButton( tr("M-"),       "M-",     SLOT( subFromMemory() ));
+    clearMemoryButton = createButton( tr("MC"),         "MC",     SLOT( clearMemory() ));
+    readMemoryButton  = createButton( tr("MR"),         "MR",     SLOT( readMemory() ));
+    setMemoryButton   = createButton( tr("MS"),         "MS",     SLOT( setMemory() ));
+    addToMemoryButton = createButton( tr("M+"),         "M+",     SLOT( addToMemory() ));
 
-    Button *divisionButton   = createButton( tr("\367"),        "/",      "/", SLOT(multiplicativeOperatorClicked() ));
-    Button *timesButton      = createButton( tr("\327"),        "*",      "*", SLOT(multiplicativeOperatorClicked() ));
-    Button *minusButton      = createButton( trUtf8("−"),     "-",      "-", SLOT(additiveOperatorClicked() ));
-    Button *plusButton       = createButton( tr("+"),           "+",      "+", SLOT(additiveOperatorClicked() ));
-    Button *equalButton      = createButton( tr("="),           "=",      QKeySequence( Qt::Key_Enter ), SLOT( equalClicked() ));
+    divisionButton   = createButton( tr("\367"),        "/",      "/", SLOT(multiplicativeOperatorClicked() ));
+    timesButton      = createButton( tr("\327"),        "*",      "*", SLOT(multiplicativeOperatorClicked() ));
+    minusButton      = createButton( trUtf8("−"),     "-",      "-", SLOT(additiveOperatorClicked() ));
+    plusButton       = createButton( tr("+"),           "+",      "+", SLOT(additiveOperatorClicked() ));
+    equalButton      = createButton( tr("="),           "=",      QKeySequence( Qt::Key_Enter ), SLOT( equalClicked() ));
 
-    Button *moduloButton     = createButton( tr("Mod"),         "MOD",    SLOT( multiplicativeOperatorClicked() ));
-    Button *squareRootButton = createButton( trUtf8("√"),     "SQRT",   SLOT( unaryOperatorClicked() ));
+    moduloButton     = createButton( tr("Mod"),         "MOD",    SLOT( multiplicativeOperatorClicked() ));
+    squareRootButton = createButton( trUtf8("√"),     "SQRT",   SLOT( unaryOperatorClicked() ));
 
-    Button *reciprocalButton = createButton( tr("1/x"),         "RECIPR", SLOT( unaryOperatorClicked() ));
-    Button *squareButton     = createButton( tr("x\262"),       "SQUARE", SLOT( unaryOperatorClicked() ));
-    Button *expButton        = createButton( trUtf8("xⁿ"),    "NEXP",   SLOT( multiplicativeOperatorClicked() ));
-    Button *nRootButton      = createButton( trUtf8("ⁿ√x"), "NROOT",  SLOT( multiplicativeOperatorClicked() ));
-    Button *logButton        = createButton( tr("log"),         "LOG",    SLOT( unaryOperatorClicked() ));
-    Button *lnButton         = createButton( tr("ln"),          "LN",     SLOT( unaryOperatorClicked() ));
-    Button *piButton         = createButton( trUtf8("π"),      "PI",     SLOT( unaryOperatorClicked() ));
-    Button *sinButton        = createButton( tr("sin"),         "SIN",    SLOT( unaryOperatorClicked() ));
-    Button *cosButton        = createButton( tr("cos"),         "COS",    SLOT( unaryOperatorClicked() ));
-    Button *tanButton        = createButton( tr("tan"),         "TAN",    SLOT( unaryOperatorClicked() ));
+    reciprocalButton = createButton( tr("1/x"),         "RECIPR", SLOT( unaryOperatorClicked() ));
+    squareButton     = createButton( tr("x\262"),       "SQUARE", SLOT( unaryOperatorClicked() ));
+    expButton        = createButton( trUtf8("xⁿ"),    "NEXP",   SLOT( multiplicativeOperatorClicked() ));
+    nRootButton      = createButton( trUtf8("ⁿ√x"), "NROOT",  SLOT( multiplicativeOperatorClicked() ));
+    logButton        = createButton( tr("log"),         "LOG",    SLOT( unaryOperatorClicked() ));
+    lnButton         = createButton( tr("ln"),          "LN",     SLOT( unaryOperatorClicked() ));
+    piButton         = createButton( trUtf8("π"),      "PI",     SLOT( unaryOperatorClicked() ));
+    sinButton        = createButton( tr("sin"),         "SIN",    SLOT( unaryOperatorClicked() ));
+    cosButton        = createButton( tr("cos"),         "COS",    SLOT( unaryOperatorClicked() ));
+    tanButton        = createButton( tr("tan"),         "TAN",    SLOT( unaryOperatorClicked() ));
 
-    Button *bitLeftButton    = createButton( tr("<<"),          "<<",     SLOT( multiplicativeOperatorClicked() ));
-    Button *bitRightButton   = createButton( tr(">>"),          ">>",     SLOT( multiplicativeOperatorClicked() ));
-    Button *bitAndButton     = createButton( tr("&&"),          "&",      SLOT( multiplicativeOperatorClicked() ));
-    Button *bitOrButton      = createButton( tr("|"),           "|",      SLOT( multiplicativeOperatorClicked() ));
-    Button *bitXorButton     = createButton( tr("^"),           "^",      SLOT( multiplicativeOperatorClicked() ));
+    bitLeftButton    = createButton( tr("<<"),          "<<",     SLOT( multiplicativeOperatorClicked() ));
+    bitRightButton   = createButton( tr(">>"),          ">>",     SLOT( multiplicativeOperatorClicked() ));
+    bitAndButton     = createButton( tr("&&"),          "&",      SLOT( multiplicativeOperatorClicked() ));
+    bitOrButton      = createButton( tr("|"),           "|",      SLOT( multiplicativeOperatorClicked() ));
+    bitXorButton     = createButton( tr("^"),           "^",      SLOT( multiplicativeOperatorClicked() ));
+
+    // Menu actions
+    //
+
+    styleMenu = new QMenu( tr("Appearance"), this );
+
+    displayFontAction = new QAction( tr("Display font..."), this );
+    connect( displayFontAction, SIGNAL( triggered() ), this, SLOT( displayFontChanged() ));
+    buttonFontAction  = new QAction( tr("Button font..."), this );
+    connect( buttonFontAction, SIGNAL( triggered() ), this, SLOT( buttonFontChanged() ));
+    aboutAction       = new QAction( tr("About..."), this );
+    connect( aboutAction, SIGNAL( triggered() ), this, SLOT( about() ));
+
+    monochromeAction  = new QAction( tr("Grey buttons"), this );
+    monochromeAction->setCheckable( true );
+    connect( monochromeAction, SIGNAL( changed() ), this, SLOT( greyChanged() ));
+
+    styleMenu->addAction( displayFontAction );
+    styleMenu->addAction( buttonFontAction );
+    styleMenu->addSeparator();
+    styleMenu->addAction( monochromeAction );
 
     // Lay out the controls
     //
@@ -249,60 +269,15 @@ Calculator::Calculator( QWidget *parent )
     //
     readSettings();
 
-    // Button colours
-
-    QPalette pal = clearAllButton->palette();
-    pal.setColor( QPalette::Button, QColor("#A0A0A0"));
-    pal.setColor( QPalette::ButtonText, QColor("#800000"));
-    clearAllButton->setPalette( pal );
-
-    pal.setColor( QPalette::ButtonText, QColor("#000000"));
-    clearButton->setPalette( pal );
-    backspaceButton->setPalette( pal );
-
-    if ( !isGrey ) pal.setColor( QPalette::Button, QColor("#A8C8A8"));
-    clearMemoryButton->setPalette( pal );
-    readMemoryButton->setPalette( pal );
-    setMemoryButton->setPalette( pal );
-    addToMemoryButton->setPalette( pal );
-
-    pal.setColor( QPalette::Button, QColor("#A8A8A8"));
-    squareRootButton->setPalette( pal );
-    moduloButton->setPalette( pal );
-    divisionButton->setPalette( pal );
-    timesButton->setPalette( pal );
-    minusButton->setPalette( pal );
-    plusButton->setPalette( pal );
-    equalButton->setPalette( pal );
-
-    if ( !isGrey ) pal.setColor( QPalette::Button, QColor("#A0B0C8"));
-    squareButton->setPalette( pal );
-    reciprocalButton->setPalette( pal );
-    expButton->setPalette( pal );
-    nRootButton->setPalette( pal );
-    piButton->setPalette( pal );
-    sinButton->setPalette( pal );
-    cosButton->setPalette( pal );
-    tanButton->setPalette( pal );
-    logButton->setPalette( pal );
-    lnButton->setPalette( pal );
-
-    if ( !isGrey ) pal.setColor( QPalette::Button, QColor("#C8C8A8"));
-    bitLeftButton->setPalette( pal );
-    bitRightButton->setPalette( pal );
-    bitAndButton->setPalette( pal );
-    bitOrButton->setPalette( pal );
-    bitXorButton->setPalette( pal );
+    setColourScheme();
 
     // Combo-box selections
-
+    modeSelector->setCurrentIndex( (int) isHexMode );
     viewSelector->setCurrentIndex( currentView );
     if ( currentView == Programming || currentView == Standard )
         showLayout( sciLayout, false );
     if ( currentView == Scientific || currentView == Standard )
         showLayout( proLayout, false );
-
-    modeSelector->setCurrentIndex( (int) isHexMode );
 
     // Finish up
 
@@ -316,7 +291,7 @@ Calculator::Calculator( QWidget *parent )
 //
 
 // ---------------------------------------------------------------------------
-//
+// modeClicked
 //
 void Calculator::modeClicked()
 {
@@ -332,7 +307,7 @@ void Calculator::modeClicked()
 
 
 // ---------------------------------------------------------------------------
-//
+// digitClicked
 //
 void Calculator::digitClicked()
 {
@@ -361,7 +336,7 @@ void Calculator::digitClicked()
 
 
 // ---------------------------------------------------------------------------
-//
+// unaryOperatorClicked
 //
 void Calculator::unaryOperatorClicked()
 {
@@ -420,7 +395,7 @@ void Calculator::unaryOperatorClicked()
 
 
 // ---------------------------------------------------------------------------
-//
+// additiveOperatorClicked
 //
 void Calculator::additiveOperatorClicked()
 {
@@ -455,7 +430,7 @@ void Calculator::additiveOperatorClicked()
 
 
 // ---------------------------------------------------------------------------
-//
+// multiplicativeOperatorClicked
 //
 void Calculator::multiplicativeOperatorClicked()
 {
@@ -479,7 +454,7 @@ void Calculator::multiplicativeOperatorClicked()
 
 
 // ---------------------------------------------------------------------------
-//
+// equalClicked
 //
 void Calculator::equalClicked()
 {
@@ -511,7 +486,7 @@ void Calculator::equalClicked()
 
 
 // ---------------------------------------------------------------------------
-//
+// pointClicked
 //
 void Calculator::pointClicked()
 {
@@ -526,7 +501,7 @@ void Calculator::pointClicked()
 
 
 // ---------------------------------------------------------------------------
-//
+// changeSignClicked
 //
 void Calculator::changeSignClicked()
 {
@@ -561,7 +536,7 @@ void Calculator::changeSignClicked()
 
 
 // ---------------------------------------------------------------------------
-//
+// backspaceClicked
 //
 void Calculator::backspaceClicked()
 {
@@ -584,11 +559,10 @@ void Calculator::backspaceClicked()
 
 
 // ---------------------------------------------------------------------------
-//
+// clear
 //
 void Calculator::clear()
 {
-//    if ( waitingForOperand ) return;
     display->setText("0");
     updateAltRepr();
     waitingForOperand = true;
@@ -596,7 +570,7 @@ void Calculator::clear()
 
 
 // ---------------------------------------------------------------------------
-//
+// clearAll
 //
 void Calculator::clearAll()
 {
@@ -611,7 +585,7 @@ void Calculator::clearAll()
 
 
 // ---------------------------------------------------------------------------
-//
+// clearMemory
 //
 void Calculator::clearMemory()
 {
@@ -620,7 +594,7 @@ void Calculator::clearMemory()
 
 
 // ---------------------------------------------------------------------------
-//
+// readMemory
 //
 void Calculator::readMemory()
 {
@@ -630,7 +604,7 @@ void Calculator::readMemory()
 
 
 // ---------------------------------------------------------------------------
-//
+// setMemory
 //
 void Calculator::setMemory()
 {
@@ -640,7 +614,7 @@ void Calculator::setMemory()
 
 
 // ---------------------------------------------------------------------------
-//
+// addToMemory
 //
 void Calculator::addToMemory()
 {
@@ -650,7 +624,7 @@ void Calculator::addToMemory()
 
 
 // ---------------------------------------------------------------------------
-//
+// subFromMemory
 //
 void Calculator::subFromMemory()
 {
@@ -660,7 +634,7 @@ void Calculator::subFromMemory()
 
 
 // ---------------------------------------------------------------------------
-//
+// modeChanged
 //
 void Calculator::modeChanged( const QString &text )
 {
@@ -680,7 +654,7 @@ void Calculator::modeChanged( const QString &text )
 
 
 // ---------------------------------------------------------------------------
-//
+// viewChanged
 //
 void Calculator::viewChanged( const QString &text )
 {
@@ -718,6 +692,58 @@ void Calculator::viewChanged( const QString &text )
 }
 
 
+// ---------------------------------------------------------------------------
+// greyChanged
+//
+void Calculator::greyChanged()
+{
+    isGrey = monochromeAction->isChecked();
+    setColourScheme();
+}
+
+
+// ---------------------------------------------------------------------------
+// buttonFontChanged
+//
+void Calculator::buttonFontChanged()
+{
+    bool selected;
+    QFont newFont = QFontDialog::getFont( &selected, clearButton->font(), this );
+    if ( selected ) {
+        setButtonFont( newFont );
+    }
+}
+
+
+// ---------------------------------------------------------------------------
+// displayFontChanged
+//
+void Calculator::displayFontChanged()
+{
+    bool selected;
+    QFont newFont = QFontDialog::getFont( &selected, display->font(), this );
+    if ( selected ) {
+        display->setFont( newFont );
+    }
+}
+
+
+// ---------------------------------------------------------------------------
+// about
+//
+void Calculator::about()
+{
+    QMessageBox::about( this,
+                        tr("Product Information"),
+                        tr("<b>AT Desktop Calculator</b><br>Version %1<hr>"
+                           "<p>Copyright &copy; 2018 Alexander Taylor.<br>"
+                           "Portions &copy; 2011 Nokia Corporation.<br>"
+                           "All rights reserved.</p>"
+                           "<p>Licensed under the modified (3-clause) BSD License."
+                           "<br></p>").arg( VER_FILEVERSION_STR )
+                      );
+}
+
 
 // ===========================================================================
 // OVERRIDDEN EVENTS
@@ -730,20 +756,31 @@ void Calculator::closeEvent( QCloseEvent *event )
 }
 
 
+void Calculator::contextMenuEvent( QContextMenuEvent *event )
+{
+    QMenu menu( this );
+    menu.addMenu( styleMenu );
+    menu.addSeparator();
+    menu.addAction( aboutAction );
+    menu.exec( event->globalPos() );
+}
+
 
 // ===========================================================================
 // OTHER METHODS
 //
 
 // ---------------------------------------------------------------------------
+// createButton
 //
+// Shortcut method (overloaded) to create a calculator button with the given
+// text, ID tag, optional key-sequence, and slot method.
 //
 Button *Calculator::createButton( const QString &text,
                                   const QString &identity,
                                   const char *member )
 {
     Button *button = new Button( text );
-//  button->setFont( btnFont );
     button->setIdentity( identity );
     connect( button, SIGNAL(clicked()), this, member );
     return button;
@@ -771,7 +808,9 @@ Button *Calculator::createButton( const QString &text,
 
 
 // ---------------------------------------------------------------------------
+// setButtonFont
 //
+// Set all calculator buttons to the given font.
 //
 void Calculator::setButtonFont( const QFont &font )
 {
@@ -783,7 +822,64 @@ void Calculator::setButtonFont( const QFont &font )
 
 
 // ---------------------------------------------------------------------------
+// setColourScheme
 //
+// Set the calculator colour scheme. Normally the different categories of
+// buttons (digit, operator, memory, scientific, programming) use different
+// colours.  If the 'grey' option is enabled, a more monochromatic scheme will
+// be used.
+//
+void Calculator::setColourScheme()
+{
+    QPalette pal = clearAllButton->palette();
+    pal.setColor( QPalette::Button, QColor("#A0A0A0"));
+    pal.setColor( QPalette::ButtonText, QColor("#800000"));
+    clearAllButton->setPalette( pal );
+
+    pal.setColor( QPalette::ButtonText, QColor("#000000"));
+    clearButton->setPalette( pal );
+    backspaceButton->setPalette( pal );
+
+    if ( !isGrey ) pal.setColor( QPalette::Button, QColor("#A8C8A8"));
+    clearMemoryButton->setPalette( pal );
+    readMemoryButton->setPalette( pal );
+    setMemoryButton->setPalette( pal );
+    addToMemoryButton->setPalette( pal );
+
+    pal.setColor( QPalette::Button, QColor("#A8A8A8"));
+    squareRootButton->setPalette( pal );
+    moduloButton->setPalette( pal );
+    divisionButton->setPalette( pal );
+    timesButton->setPalette( pal );
+    minusButton->setPalette( pal );
+    plusButton->setPalette( pal );
+    equalButton->setPalette( pal );
+
+    if ( !isGrey ) pal.setColor( QPalette::Button, QColor("#A0B0C8"));
+    squareButton->setPalette( pal );
+    reciprocalButton->setPalette( pal );
+    expButton->setPalette( pal );
+    nRootButton->setPalette( pal );
+    piButton->setPalette( pal );
+    sinButton->setPalette( pal );
+    cosButton->setPalette( pal );
+    tanButton->setPalette( pal );
+    logButton->setPalette( pal );
+    lnButton->setPalette( pal );
+
+    if ( !isGrey ) pal.setColor( QPalette::Button, QColor("#C8C8A8"));
+    bitLeftButton->setPalette( pal );
+    bitRightButton->setPalette( pal );
+    bitAndButton->setPalette( pal );
+    bitOrButton->setPalette( pal );
+    bitXorButton->setPalette( pal );
+}
+
+
+// ---------------------------------------------------------------------------
+// currentDisplayValue
+//
+// Returns the current value shown in the display (as double).
 //
 double Calculator::currentDisplayValue()
 {
@@ -800,7 +896,11 @@ double Calculator::currentDisplayValue()
 
 
 // ---------------------------------------------------------------------------
+// setCurrentDisplayValue
 //
+// (Overloaded) Updates the display with the current value (either double or
+// long long), along with the alternate-representation field. The numbers will
+// be formatted in decimal/hexadecimal as appropriate.
 //
 void Calculator::setCurrentDisplayValue( double value )
 {
@@ -822,7 +922,7 @@ void Calculator::setCurrentDisplayValue( long long value )
 
 
 // ---------------------------------------------------------------------------
-//
+// abortOperation
 //
 void Calculator::abortOperation()
 {
@@ -833,7 +933,9 @@ void Calculator::abortOperation()
 
 
 // ---------------------------------------------------------------------------
+// calculate
 //
+// This method performs all two-operand calculation operations.
 //
 bool Calculator::calculate( double rightOperand, const QString &pendingOperator )
 {
@@ -876,7 +978,7 @@ bool Calculator::calculate( double rightOperand, const QString &pendingOperator 
 
 
 // ---------------------------------------------------------------------------
-//
+// findFont
 //
 QString Calculator::findFont( const QString fontFamily )
 {
@@ -890,7 +992,7 @@ QString Calculator::findFont( const QString fontFamily )
 
 
 // ---------------------------------------------------------------------------
-//
+// updateAltRepr
 //
 void Calculator::updateAltRepr()
 {
@@ -925,7 +1027,7 @@ void Calculator::updateAltRepr()
 
 
 // ---------------------------------------------------------------------------
-//
+// showLayout
 //
 int Calculator::showLayout( const QLayout *layout, bool visible )
 {
@@ -952,20 +1054,23 @@ int Calculator::showLayout( const QLayout *layout, bool visible )
 
 
 // ---------------------------------------------------------------------------
-//
+// readSettings
 //
 void Calculator::readSettings()
 {
     QSettings settings( SETTINGS_VENDOR, SETTINGS_APP );
 
-    reprName->setText( isHexMode? "DEC:": "HEX:");
-
     currentView = (short) settings.value("view").toInt();
-    isHexMode = settings.value("mode").toBool();
+    isHexMode   = settings.value("mode").toBool();
+    isGrey      = settings.value("monochrome").toBool();
+    monochromeAction->setChecked( isGrey );
+
     restoreGeometry( settings.value("geometry").toByteArray() );
 
+    reprName->setText( isHexMode? "DEC:": "HEX:");
+
     // Set up fonts
-    editFont = display->font();
+    QFont font = display->font();
     QString foundFont = findFont("Consolas");
     if ( foundFont.isEmpty() )
         QString foundFont = findFont("Inconsolata");
@@ -973,34 +1078,32 @@ void Calculator::readSettings()
         foundFont = findFont("Source Code Pro");
     if ( foundFont.isEmpty() )
         foundFont = "Workplace Sans";
-    editFont.fromString( settings.value("editFont", foundFont + ",18").toString() );
+    font.fromString( settings.value("editFont", foundFont + ",18").toString() );
+    display->setFont( font );
 
-    btnFont = editFont;
-    //btnFont.setPointSize( editFont.pointSize() + 8 );
     foundFont = findFont("Helvetica");
     if ( foundFont.isEmpty() )
         foundFont = findFont("Source Sans Pro");
     if ( foundFont.isEmpty() )
         foundFont = "Workplace Sans";
-    btnFont.fromString( settings.value("buttonFont", foundFont + ",12").toString() );
-
-    display->setFont( editFont );
-    setButtonFont( btnFont );
+    font.fromString( settings.value("buttonFont", foundFont + ",12").toString() );
+    setButtonFont( font );
 }
 
 
 // ---------------------------------------------------------------------------
-//
+// writeSettings
 //
 void Calculator::writeSettings()
 {
     QSettings settings( SETTINGS_VENDOR, SETTINGS_APP );
 
     settings.setValue("geometry",   saveGeometry() );
-    settings.setValue("editFont",   editFont.toString() );
-    settings.setValue("buttonFont", btnFont.toString() );
+    settings.setValue("editFont",   display->font().toString() );
+    settings.setValue("buttonFont", clearButton->font().toString() );
     settings.setValue("view",       currentView );
     settings.setValue("mode",       isHexMode );
+    settings.setValue("monochrome", isGrey );
 }
 
 
