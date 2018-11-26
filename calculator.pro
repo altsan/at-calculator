@@ -3,6 +3,7 @@ HEADERS       = button.h \
 SOURCES       = button.cpp \
                 calculator.cpp \
                 main.cpp
+RESOURCES    += calculator.qrc
 
 os2:QMAKE_CXXFLAGS += -Wno-unused-local-typedefs
 

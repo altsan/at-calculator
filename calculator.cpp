@@ -280,7 +280,16 @@ Calculator::Calculator( QWidget *parent )
     if ( currentView == Scientific || currentView == Standard )
         showLayout( proLayout, false );
 
-    // Finish up
+    // Finish up by setting the focus, window title and icon.
+
+#ifndef __OS2__
+    // Qt4 on OS/2 doesn't render PNGs well, so just leave it with the native icon
+    QIcon icon;
+    icon.addFile(":/images/calc_16.png", QSize( 16, 16 ), QIcon::Normal, QIcon::On );
+    icon.addFile(":/images/calc_32.png", QSize( 32, 32 ), QIcon::Normal, QIcon::On );
+    icon.addFile(":/images/calc_64.png", QSize( 64, 64 ), QIcon::Normal, QIcon::On );
+    setWindowIcon( icon );
+#endif
 
     display->setFocus( Qt::ActiveWindowFocusReason );
     setWindowTitle( tr("Calculator"));

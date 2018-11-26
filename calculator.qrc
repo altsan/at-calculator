@@ -1,0 +1,8 @@
+<RCC>
+  <qresource>
+    <file>images/calc_64.png</file>
+    <file>images/calc_32.png</file>
+    <file>images/calc_16.png</file>
+  </qresource>
+</RCC>
+
