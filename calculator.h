@@ -64,6 +64,7 @@ public:
 protected:
     void closeEvent( QCloseEvent *event );
     void contextMenuEvent( QContextMenuEvent *event );
+    void keyPressEvent( QKeyEvent *event );
 
 private slots:
     void modeClicked();

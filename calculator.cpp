@@ -55,7 +55,7 @@
 //
 
 Calculator::Calculator( QWidget *parent )
-    : QDialog( parent, Qt::WindowMinimizeButtonHint )
+    : QDialog( parent, Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint )
 {
     // Initialize calculation status
     sumInMemory = 0.0;
@@ -106,7 +106,7 @@ Calculator::Calculator( QWidget *parent )
 
     // Create the action buttons
     //
-    clearAllButton   = createButton( tr("AC"),          "AC",     SLOT( clearAll() ));
+    clearAllButton   = createButton( tr("AC"),          "AC",     QKeySequence::DeleteEndOfWord,     SLOT( clearAll() ));
     clearButton      = createButton( tr("CE"),          "CE",     QKeySequence::DeleteStartOfWord,   SLOT( clear() ));
     backspaceButton  = createButton( trUtf8("← Back"),"BACK",   QKeySequence( Qt::Key_Backspace ), SLOT( backspaceClicked() ));
 
@@ -775,6 +775,19 @@ void Calculator::contextMenuEvent( QContextMenuEvent *event )
 }
 
 
+void Calculator::keyPressEvent( QKeyEvent *event )
+{
+    switch ( event->key() ) {
+        case Qt::Key_Escape:
+            // Prevent Esc from closing window
+            event->accept();
+            break;
+        default:
+            break;
+    }
+}
+
+
 // ===========================================================================
 // OTHER METHODS
 //
@@ -849,12 +862,6 @@ void Calculator::setColourScheme()
     clearButton->setPalette( pal );
     backspaceButton->setPalette( pal );
 
-    if ( !isGrey ) pal.setColor( QPalette::Button, QColor("#A8C8A8"));
-    clearMemoryButton->setPalette( pal );
-    readMemoryButton->setPalette( pal );
-    setMemoryButton->setPalette( pal );
-    addToMemoryButton->setPalette( pal );
-
     pal.setColor( QPalette::Button, QColor("#A8A8A8"));
     squareRootButton->setPalette( pal );
     moduloButton->setPalette( pal );
@@ -863,6 +870,12 @@ void Calculator::setColourScheme()
     minusButton->setPalette( pal );
     plusButton->setPalette( pal );
     equalButton->setPalette( pal );
+
+    if ( !isGrey ) pal.setColor( QPalette::Button, QColor("#A8C8A8"));
+    clearMemoryButton->setPalette( pal );
+    readMemoryButton->setPalette( pal );
+    setMemoryButton->setPalette( pal );
+    addToMemoryButton->setPalette( pal );
 
     if ( !isGrey ) pal.setColor( QPalette::Button, QColor("#A0B0C8"));
     squareButton->setPalette( pal );
