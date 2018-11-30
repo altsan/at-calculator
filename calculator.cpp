@@ -41,6 +41,7 @@
 #include <QtGui>
 
 #include <math.h>
+#include <limits.h>
 
 #include "version.h"
 #include "button.h"
@@ -137,13 +138,13 @@ Calculator::Calculator( QWidget *parent )
     plusButton       = createButton( tr("+"),           "+",      "+", SLOT(additiveOperatorClicked() ));
 
     moduloButton     = createButton( tr("Mod"),         "MOD",    SLOT( multiplicativeOperatorClicked() ));
-    squareRootButton = createButton( trUtf8("√"),     "SQRT",   SLOT( unaryOperatorClicked() ));
 
     equalButton      = createButton( tr("="),           "=",      QKeySequence( Qt::Key_Enter ), SLOT( equalClicked() ));
 
     reciprocalButton = createButton( tr("1/x"),         "RECIPR", SLOT( unaryOperatorClicked() ));
     squareButton     = createButton( tr("x\262"),       "SQUARE", SLOT( unaryOperatorClicked() ));
     expButton        = createButton( trUtf8("xⁿ"),    "NEXP",   SLOT( multiplicativeOperatorClicked() ));
+    squareRootButton = createButton( trUtf8("√"),     "SQRT",   SLOT( unaryOperatorClicked() ));
     nRootButton      = createButton( trUtf8("ⁿ√x"), "NROOT",  SLOT( multiplicativeOperatorClicked() ));
     piButton         = createButton( trUtf8("π"),      "PI",     SLOT( unaryOperatorClicked() ));
     sinButton        = createButton( tr("sin"),         "SIN",    SLOT( unaryOperatorClicked() ));
@@ -151,12 +152,15 @@ Calculator::Calculator( QWidget *parent )
     tanButton        = createButton( tr("tan"),         "TAN",    SLOT( unaryOperatorClicked() ));
     logButton        = createButton( tr("log"),         "LOG",    SLOT( unaryOperatorClicked() ));
     lnButton         = createButton( tr("ln"),          "LN",     SLOT( unaryOperatorClicked() ));
+    eButton          = createButton( trUtf8("e"),       "E",      SLOT( unaryOperatorClicked() ));
 
     bitLeftButton    = createButton( tr("<<"),          "<<",     SLOT( multiplicativeOperatorClicked() ));
     bitRightButton   = createButton( tr(">>"),          ">>",     SLOT( multiplicativeOperatorClicked() ));
     bitAndButton     = createButton( tr("&&"),          "&",      SLOT( multiplicativeOperatorClicked() ));
     bitOrButton      = createButton( tr("|"),           "|",      SLOT( multiplicativeOperatorClicked() ));
     bitXorButton     = createButton( tr("^"),           "^",      SLOT( multiplicativeOperatorClicked() ));
+    bitNotButton     = createButton( trUtf8("¬"),      "NOT",    SLOT( unaryOperatorClicked() ));
+    integerButton    = createButton( tr("Int"),         "INT",    SLOT( unaryOperatorClicked() ));
 
     // Menu actions
     //
@@ -216,24 +220,26 @@ Calculator::Calculator( QWidget *parent )
     mainLayout->addWidget( equalButton, 6, 5, 2, 1 );
 
     mainLayout->addWidget( moduloButton, 4, 5 );
-    mainLayout->addWidget( squareRootButton, 5, 5 );
+    mainLayout->addWidget( integerButton, 5, 5 );
 
     // Scientific button area
 
     sciLayout = new QGridLayout;
-    sciLayout->addWidget( sinButton, 0, 0 );
-    sciLayout->addWidget( cosButton, 1, 0 );
-    sciLayout->addWidget( tanButton, 2, 0 );
-    sciLayout->addWidget( logButton, 3, 0 );
-    sciLayout->addWidget( lnButton, 4, 0 );
+    sciLayout->addWidget( sinButton,        0, 0 );
+    sciLayout->addWidget( cosButton,        1, 0 );
+    sciLayout->addWidget( tanButton,        2, 0 );
+    sciLayout->addWidget( logButton,        3, 0 );
+    sciLayout->addWidget( lnButton,         4, 0 );
+    sciLayout->addWidget( eButton,         5, 0 );
     sciLayout->addWidget( reciprocalButton, 0, 1 );
-    sciLayout->addWidget( squareButton, 1, 1 );
-    sciLayout->addWidget( expButton, 2, 1 );
-    sciLayout->addWidget( nRootButton, 3, 1 );
-    sciLayout->addWidget( piButton, 4, 1 );
+    sciLayout->addWidget( squareButton,     1, 1 );
+    sciLayout->addWidget( expButton,        2, 1 );
+    sciLayout->addWidget( squareRootButton, 3, 1 );
+    sciLayout->addWidget( nRootButton,      4, 1 );
+    sciLayout->addWidget( piButton,         5, 1 );
     sciLayout->setSpacing( 6 );
 
-    // Programming button area
+    // Programming (bit operation) button area
 
     proLayout = new QGridLayout;
     proLayout->addWidget( bitLeftButton,  0, 0 );
@@ -241,6 +247,7 @@ Calculator::Calculator( QWidget *parent )
     proLayout->addWidget( bitAndButton,   2, 0 );
     proLayout->addWidget( bitOrButton,    3, 0 );
     proLayout->addWidget( bitXorButton,   4, 0 );
+    proLayout->addWidget( bitNotButton,   5, 0 );
     proLayout->setSpacing( 6 );
 
     // Section layout holding all the above button areas
@@ -389,6 +396,9 @@ void Calculator::unaryOperatorClicked()
     else if ( clickedOperator == "PI") {        // pi
         result = M_PI;
     }
+    else if ( clickedOperator == "E") {         // e
+        result = M_E;
+    }
     else if ( clickedOperator == "SIN") {       // sine
         result = RAD_TO_DEG( sin( DEG_TO_RAD( operand )));
     }
@@ -397,6 +407,15 @@ void Calculator::unaryOperatorClicked()
     }
     else if ( clickedOperator == "TAN") {       // tangent
         result = RAD_TO_DEG( tan( DEG_TO_RAD( operand )));
+    }
+    else if ( clickedOperator == "NOT") {       // 1's complement
+        result = ~((qlonglong) operand);
+    }
+    else if ( clickedOperator == "INT") {       // integer
+        //QVariant var( operand );
+        setCurrentDisplayValue( (qlonglong) operand );     // var.toLongLong()
+        waitingForOperand = true;
+        return;
     }
 
     setCurrentDisplayValue( result );
@@ -618,7 +637,7 @@ void Calculator::readMemory()
 //
 void Calculator::setMemory()
 {
-    equalClicked();
+//    equalClicked();
     sumInMemory = currentDisplayValue();
 }
 
@@ -863,7 +882,7 @@ void Calculator::setColourScheme()
     backspaceButton->setPalette( pal );
 
     pal.setColor( QPalette::Button, QColor("#A8A8A8"));
-    squareRootButton->setPalette( pal );
+    integerButton->setPalette( pal );
     moduloButton->setPalette( pal );
     divisionButton->setPalette( pal );
     timesButton->setPalette( pal );
@@ -881,6 +900,7 @@ void Calculator::setColourScheme()
     squareButton->setPalette( pal );
     reciprocalButton->setPalette( pal );
     expButton->setPalette( pal );
+    squareRootButton->setPalette( pal );
     nRootButton->setPalette( pal );
     piButton->setPalette( pal );
     sinButton->setPalette( pal );
@@ -888,6 +908,7 @@ void Calculator::setColourScheme()
     tanButton->setPalette( pal );
     logButton->setPalette( pal );
     lnButton->setPalette( pal );
+    eButton->setPalette( pal );
 
     if ( !isGrey ) pal.setColor( QPalette::Button, QColor("#C8C8A8"));
     bitLeftButton->setPalette( pal );
@@ -895,6 +916,7 @@ void Calculator::setColourScheme()
     bitAndButton->setPalette( pal );
     bitOrButton->setPalette( pal );
     bitXorButton->setPalette( pal );
+    bitNotButton->setPalette( pal );
 }
 
 
@@ -974,7 +996,7 @@ bool Calculator::calculate( double rightOperand, const QString &pendingOperator 
     } else if ( pendingOperator == "MOD") {                 // modulo
         if ( rightOperand == 0.0 )
            return false;
-        factorSoFar = (qlonglong)factorSoFar % (qlonglong)rightOperand;
+        factorSoFar = (qlonglong)factorSoFar % (qlonglong) rightOperand;
     } else if ( pendingOperator == "NEXP") {                // n-exp
         factorSoFar = pow( factorSoFar, rightOperand );
     } else if ( pendingOperator == "NROOT") {               // n-root
@@ -1100,7 +1122,7 @@ void Calculator::readSettings()
         foundFont = findFont("Source Code Pro");
     if ( foundFont.isEmpty() )
         foundFont = "Workplace Sans";
-    font.fromString( settings.value("editFont", foundFont + ",18").toString() );
+    font.fromString( settings.value("editFont", foundFont + ",16").toString() );
     display->setFont( font );
 
     foundFont = findFont("Helvetica");
@@ -1108,7 +1130,7 @@ void Calculator::readSettings()
         foundFont = findFont("Source Sans Pro");
     if ( foundFont.isEmpty() )
         foundFont = "Workplace Sans";
-    font.fromString( settings.value("buttonFont", foundFont + ",12").toString() );
+    font.fromString( settings.value("buttonFont", foundFont + ",10").toString() );
     setButtonFont( font );
 }
 

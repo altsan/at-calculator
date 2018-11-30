@@ -158,6 +158,7 @@ private:
     Button *nRootButton;
     Button *logButton;
     Button *lnButton;
+    Button *eButton;
     Button *piButton;
     Button *sinButton;
     Button *cosButton;
@@ -167,6 +168,10 @@ private:
     Button *bitAndButton;
     Button *bitOrButton;
     Button *bitXorButton;
+    Button *bitNotButton;
+    Button *bitLroButton;
+    Button *bitRroButton;
+    Button *integerButton;
 
 };
 
