@@ -43,9 +43,10 @@
 #include <math.h>
 #include <limits.h>
 
-#ifdef __OS2__
+#if 0   //ifdef __OS2__
 #define WS_TOPMOST  0x00200000L
 #define INCL_WINWINDOWMGR
+#define INCL_WINERRORS
 #include <os2.h>
 #endif
 
@@ -793,8 +794,10 @@ void Calculator::viewChanged( const QString &text )
 void Calculator::onTopChanged()
 {
     isOnTop = onTopAction->isChecked();
-#ifdef __OS2__
-    WinSetWindowBits( winId(), QWL_STYLE, isOnTop? WS_TOPMOST: 0L, WS_TOPMOST );
+#if 0   //ifdef __OS2__
+    HWND hwnd = WinQueryWindow( winId(), QW_OWNER );
+    if ( hwnd )
+        WinSetWindowBits( hwnd, QWL_STYLE, isOnTop? WS_TOPMOST: 0L, WS_TOPMOST );
 #else
     Qt::WindowFlags flags = windowFlags();
     if ( isOnTop )
@@ -875,10 +878,17 @@ void Calculator::contextMenuEvent( QContextMenuEvent *event )
 {
     QMenu menu( this );
     menu.addMenu( styleMenu );
+#ifndef __OS2__
     menu.addAction( onTopAction );
+#endif
     menu.addSeparator();
     menu.addAction( aboutAction );
     menu.exec( event->globalPos() );
+#if 0   // ifdef __OS2__
+    if ( isOnTop )
+        WinSetWindowBits( menu.winId(), QWL_STYLE, WS_TOPMOST, WS_TOPMOST );
+#endif
+
 }
 
 
