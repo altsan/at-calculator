@@ -43,6 +43,13 @@
 #include <math.h>
 #include <limits.h>
 
+#ifdef __OS2__
+#define WS_TOPMOST  0x00200000L
+#define INCL_WINWINDOWMGR
+#include <os2.h>
+#endif
+
+
 #include "version.h"
 #include "button.h"
 #include "calculator.h"
@@ -143,9 +150,9 @@ Calculator::Calculator( QWidget *parent )
 
     reciprocalButton = createButton( tr("1/x"),         "RECIPR", SLOT( unaryOperatorClicked() ));
     squareButton     = createButton( tr("x\262"),       "SQUARE", SLOT( unaryOperatorClicked() ));
-    expButton        = createButton( trUtf8("xⁿ"),    "NEXP",   SLOT( multiplicativeOperatorClicked() ));
-    squareRootButton = createButton( trUtf8("√"),     "SQRT",   SLOT( unaryOperatorClicked() ));
-    nRootButton      = createButton( trUtf8("ⁿ√x"), "NROOT",  SLOT( multiplicativeOperatorClicked() ));
+    expButton        = createButton( trUtf8("xⁿ"),    "NEXP",   SLOT( exponentialOperatorClicked() ));
+    squareRootButton = createButton( trUtf8("√x"),    "SQRT",   SLOT( unaryOperatorClicked() ));
+    nRootButton      = createButton( trUtf8("ⁿ√x"), "NROOT",  SLOT( exponentialOperatorClicked() ));
     piButton         = createButton( trUtf8("π"),      "PI",     SLOT( unaryOperatorClicked() ));
     sinButton        = createButton( tr("sin"),         "SIN",    SLOT( unaryOperatorClicked() ));
     cosButton        = createButton( tr("cos"),         "COS",    SLOT( unaryOperatorClicked() ));
@@ -165,18 +172,22 @@ Calculator::Calculator( QWidget *parent )
     // Menu actions
     //
 
-    styleMenu = new QMenu( tr("Appearance"), this );
+    styleMenu = new QMenu( tr("&Appearance"), this );
 
-    displayFontAction = new QAction( tr("Display font..."), this );
+    displayFontAction = new QAction( tr("&Display font..."), this );
     connect( displayFontAction, SIGNAL( triggered() ), this, SLOT( displayFontChanged() ));
-    buttonFontAction  = new QAction( tr("Button font..."), this );
+    buttonFontAction  = new QAction( tr("&Button font..."), this );
     connect( buttonFontAction, SIGNAL( triggered() ), this, SLOT( buttonFontChanged() ));
-    aboutAction       = new QAction( tr("Product information"), this );
-    connect( aboutAction, SIGNAL( triggered() ), this, SLOT( about() ));
-
-    monochromeAction  = new QAction( tr("Grey buttons"), this );
+    monochromeAction  = new QAction( tr("&Grey buttons"), this );
     monochromeAction->setCheckable( true );
     connect( monochromeAction, SIGNAL( changed() ), this, SLOT( greyChanged() ));
+
+    onTopAction = new QAction( tr("Stay on &top"), this );
+    onTopAction->setCheckable( true );
+    connect( onTopAction, SIGNAL( changed() ), this, SLOT( onTopChanged() ));
+
+    aboutAction = new QAction( tr("Product &information"), this );
+    connect( aboutAction, SIGNAL( triggered() ), this, SLOT( about() ));
 
     styleMenu->addAction( displayFontAction );
     styleMenu->addAction( buttonFontAction );
@@ -432,6 +443,17 @@ void Calculator::additiveOperatorClicked()
     QString clickedOperator = clickedButton->identity();
     double operand = currentDisplayValue();
 
+    if ( !pendingExponentialOperator.isEmpty() ) {
+        if ( ! calculate( operand, pendingExponentialOperator )) {
+            abortOperation();
+            return;
+        }
+        setCurrentDisplayValue( expSoFar );
+        operand = expSoFar;
+        expSoFar = 0.0;
+        pendingExponentialOperator.clear();
+    }
+
     if ( !pendingMultiplicativeOperator.isEmpty() ) {
         if ( ! calculate( operand, pendingMultiplicativeOperator )) {
             abortOperation();
@@ -467,6 +489,17 @@ void Calculator::multiplicativeOperatorClicked()
     QString clickedOperator = clickedButton->identity();
     double operand = currentDisplayValue();
 
+    if ( !pendingExponentialOperator.isEmpty() ) {
+        if ( ! calculate( operand, pendingExponentialOperator )) {
+            abortOperation();
+            return;
+        }
+        setCurrentDisplayValue( expSoFar );
+        operand = expSoFar;
+        expSoFar = 0.0;
+        pendingExponentialOperator.clear();
+    }
+
     if ( !pendingMultiplicativeOperator.isEmpty() ) {
         if ( ! calculate( operand, pendingMultiplicativeOperator )) {
             abortOperation();
@@ -483,12 +516,45 @@ void Calculator::multiplicativeOperatorClicked()
 
 
 // ---------------------------------------------------------------------------
+// exponentialOperatorClicked
+//
+void Calculator::exponentialOperatorClicked()
+{
+    Button *clickedButton = qobject_cast<Button *>( sender() );
+    QString clickedOperator = clickedButton->identity();
+    double operand = currentDisplayValue();
+
+    if ( !pendingExponentialOperator.isEmpty() ) {
+        if ( ! calculate( operand, pendingExponentialOperator )) {
+            abortOperation();
+            return;
+        }
+        setCurrentDisplayValue( expSoFar );
+    } else {
+        expSoFar = operand;
+    }
+
+    pendingExponentialOperator = clickedOperator;
+    waitingForOperand = true;
+}
+
+
+// ---------------------------------------------------------------------------
 // equalClicked
 //
 void Calculator::equalClicked()
 {
     double operand = currentDisplayValue();
 
+    if ( !pendingExponentialOperator.isEmpty() ) {
+        if ( ! calculate( operand, pendingExponentialOperator )) {
+            abortOperation();
+            return;
+        }
+        operand = expSoFar;
+        expSoFar = 0.0;
+        pendingExponentialOperator.clear();
+    }
     if ( !pendingMultiplicativeOperator.isEmpty() ) {
         if ( ! calculate( operand, pendingMultiplicativeOperator )) {
             abortOperation();
@@ -722,6 +788,27 @@ void Calculator::viewChanged( const QString &text )
 
 
 // ---------------------------------------------------------------------------
+// onTopChanged
+//
+void Calculator::onTopChanged()
+{
+    isOnTop = onTopAction->isChecked();
+#ifdef __OS2__
+    WinSetWindowBits( winId(), QWL_STYLE, isOnTop? WS_TOPMOST: 0L, WS_TOPMOST );
+#else
+    Qt::WindowFlags flags = windowFlags();
+    if ( isOnTop )
+        flags |= Qt::WindowStaysOnTopHint;
+    else
+        flags &= ~Qt::WindowStaysOnTopHint;
+    setWindowFlags( flags );
+    show();
+#endif
+
+}
+
+
+// ---------------------------------------------------------------------------
 // greyChanged
 //
 void Calculator::greyChanged()
@@ -788,6 +875,7 @@ void Calculator::contextMenuEvent( QContextMenuEvent *event )
 {
     QMenu menu( this );
     menu.addMenu( styleMenu );
+    menu.addAction( onTopAction );
     menu.addSeparator();
     menu.addAction( aboutAction );
     menu.exec( event->globalPos() );
@@ -998,11 +1086,11 @@ bool Calculator::calculate( double rightOperand, const QString &pendingOperator 
            return false;
         factorSoFar = (qlonglong)factorSoFar % (qlonglong) rightOperand;
     } else if ( pendingOperator == "NEXP") {                // n-exp
-        factorSoFar = pow( factorSoFar, rightOperand );
+        expSoFar = pow( expSoFar, rightOperand );
     } else if ( pendingOperator == "NROOT") {               // n-root
-        if ( factorSoFar > 0.0 )
-            factorSoFar = exp( log( factorSoFar ) / rightOperand );
-        else if ( factorSoFar == 0.0 )
+        if ( expSoFar > 0.0 )
+            expSoFar = exp( log( expSoFar ) / rightOperand );
+        else if ( expSoFar == 0.0 )
             return true;
         else return false;
     } else if ( pendingOperator == "<<") {                  // shift left

@@ -72,6 +72,7 @@ private slots:
     void unaryOperatorClicked();
     void additiveOperatorClicked();
     void multiplicativeOperatorClicked();
+    void exponentialOperatorClicked();
     void equalClicked();
     void pointClicked();
     void changeSignClicked();
@@ -85,6 +86,7 @@ private slots:
     void subFromMemory();
     void modeChanged( const QString &text );
     void viewChanged( const QString &text );
+    void onTopChanged();
     void greyChanged();
     void buttonFontChanged();
     void displayFontChanged();
@@ -110,9 +112,12 @@ private:
     double sumInMemory;
     double sumSoFar;
     double factorSoFar;
+    double expSoFar;
     QString pendingAdditiveOperator;
     QString pendingMultiplicativeOperator;
+    QString pendingExponentialOperator;
     bool waitingForOperand;
+    bool isOnTop;
     bool isHexMode;
     bool isGrey;
 
@@ -130,6 +135,7 @@ private:
     QAction *monochromeAction;
     QAction *displayFontAction;
     QAction *buttonFontAction;
+    QAction *onTopAction;
     QAction *aboutAction;
 
     enum { NumDigitButtons = 10 };
