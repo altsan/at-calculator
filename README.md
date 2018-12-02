@@ -17,17 +17,17 @@ _AT Desktop Calculator_ supports a selection of standard, scientific, and
 programming (bitwise logic) functions.  The scientific and/or programming
 controls may be shown or hidden.
 
-A hexadecimal input mode is available.  However, real (floating point)
-numbers are not supported in hexadecimal mode.
+Both decimal and hexadecimal input modes are available.  However, real 
+(floating point) numbers are not supported in hexadecimal mode.
 
 Mathematical order of operations is observed.  For example, entering 
-`5 [+] 2 [×] 3 [x?] 3` will be evaluated as `5 + (2 × 3³)`, yielding a 
+`5 [+] 2 [×] 3 [xⁿ] 3` will be evaluated as `5 + (2 × 3³)`, yielding a 
 result of `59`.  (Bitwise shifts are treated as multiplication operations 
 for this purpose.)
 
-The window size and font are customizable.  Note that if you change the
-font used for buttons, you should choose a Unicode-capable font which 
-includes the necessary symbols.
+The calculator fonts are customizable.  Note that if you change the font 
+used for buttons, you should choose a Unicode-capable font which includes 
+the necessary symbols.
 
 
 Notices
