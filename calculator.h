@@ -99,20 +99,20 @@ private:
     void    setButtonFont( const QFont &font );
     void    setColourScheme();
     void    abortOperation();
-    double  currentDisplayValue();
-    void    setCurrentDisplayValue( double value );
+    long double  currentDisplayValue();
+    void    setCurrentDisplayValue( long double value );
     void    setCurrentDisplayValue( long long value );
-    bool    calculate( double rightOperand, const QString &pendingOperator );
+    bool    calculate( long double rightOperand, const QString &pendingOperator );
     void    updateAltRepr();
     int     showLayout( const QLayout *layout, bool visible );
     QString findFont( const QString fontFamily );
     void    readSettings();
     void    writeSettings();
 
-    double sumInMemory;
-    double sumSoFar;
-    double factorSoFar;
-    double expSoFar;
+    long double sumInMemory;
+    long double sumSoFar;
+    long double factorSoFar;
+    long double expSoFar;
     QString pendingAdditiveOperator;
     QString pendingMultiplicativeOperator;
     QString pendingExponentialOperator;

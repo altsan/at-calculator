@@ -39,6 +39,7 @@
 ****************************************************************************/
 
 #include <QtGui>
+#include <sstream>
 
 #include <math.h>
 #include <limits.h>
@@ -209,7 +210,6 @@ Calculator::Calculator( QWidget *parent )
     }
     for ( int i = 0; i < NumHexButtons; i++ ) {
         mainLayout->addWidget( hexButtons[ i ], 3, i );
-        hexButtons[ i ]->setVisible( isHexMode );
     }
 
     mainLayout->addWidget( clearAllButton, 2, 0, 1, 2 );
@@ -293,6 +293,9 @@ Calculator::Calculator( QWidget *parent )
 
     // Combo-box selections
     modeSelector->setCurrentIndex( (int) isHexMode );
+    for ( int i = 0; i < NumHexButtons; i++ )
+        hexButtons[ i ]->setVisible( isHexMode );
+
     viewSelector->setCurrentIndex( currentView );
     if ( currentView == Programming || currentView == Standard )
         showLayout( sciLayout, false );
@@ -371,8 +374,8 @@ void Calculator::unaryOperatorClicked()
 {
     Button *clickedButton = qobject_cast<Button *>( sender() );
     QString clickedOperator = clickedButton->identity();
-    double operand = currentDisplayValue();
-    double result = 0.0;
+    long double operand = currentDisplayValue();
+    long double result = 0.0;
 
     if ( clickedOperator == "SQRT") {           // square root
         if ( operand < 0.0 ) {
@@ -442,7 +445,7 @@ void Calculator::additiveOperatorClicked()
 {
     Button *clickedButton = qobject_cast<Button *>(sender());
     QString clickedOperator = clickedButton->identity();
-    double operand = currentDisplayValue();
+    long double operand = currentDisplayValue();
 
     if ( !pendingExponentialOperator.isEmpty() ) {
         if ( ! calculate( operand, pendingExponentialOperator )) {
@@ -488,7 +491,7 @@ void Calculator::multiplicativeOperatorClicked()
 {
     Button *clickedButton = qobject_cast<Button *>( sender() );
     QString clickedOperator = clickedButton->identity();
-    double operand = currentDisplayValue();
+    long double operand = currentDisplayValue();
 
     if ( !pendingExponentialOperator.isEmpty() ) {
         if ( ! calculate( operand, pendingExponentialOperator )) {
@@ -523,7 +526,7 @@ void Calculator::exponentialOperatorClicked()
 {
     Button *clickedButton = qobject_cast<Button *>( sender() );
     QString clickedOperator = clickedButton->identity();
-    double operand = currentDisplayValue();
+    long double operand = currentDisplayValue();
 
     if ( !pendingExponentialOperator.isEmpty() ) {
         if ( ! calculate( operand, pendingExponentialOperator )) {
@@ -545,7 +548,7 @@ void Calculator::exponentialOperatorClicked()
 //
 void Calculator::equalClicked()
 {
-    double operand = currentDisplayValue();
+    long double operand = currentDisplayValue();
 
     if ( !pendingExponentialOperator.isEmpty() ) {
         if ( ! calculate( operand, pendingExponentialOperator )) {
@@ -606,7 +609,7 @@ void Calculator::changeSignClicked()
     waitingForOperand = true;
     if ( isHexMode ) {
         bool ok;
-        long long llValue = text.toULongLong( &ok, 16 );
+        qlonglong llValue = text.toULongLong( &ok, 16 );
         if ( !ok )  {
             abortOperation();
             // TODO show error: number out of range
@@ -619,7 +622,7 @@ void Calculator::changeSignClicked()
         setCurrentDisplayValue( llValue );
     }
     else {
-        double value = currentDisplayValue();
+        long double value = currentDisplayValue();
         if ( value > 0.0 ) {
             text.prepend( tr("-"));
         } else if ( value < 0.0 ) {
@@ -734,7 +737,7 @@ void Calculator::subFromMemory()
 //
 void Calculator::modeChanged( const QString &text )
 {
-    double value = currentDisplayValue();
+    long double value = currentDisplayValue();
     if ( text == tr("Hexadecimal")) {
         isHexMode = true;
     }
@@ -1021,18 +1024,22 @@ void Calculator::setColourScheme()
 // ---------------------------------------------------------------------------
 // currentDisplayValue
 //
-// Returns the current value shown in the display (as double).
+// Returns the current value shown in the display (as long double).
 //
-double Calculator::currentDisplayValue()
+long double Calculator::currentDisplayValue()
 {
-    bool ok;
-    double value = 0;
+    long double value = 0;
+    qlonglong llValue = 0;
 
-    if ( isHexMode )
-        value = (double) display->text().toLongLong( &ok, 16 );
-    else
-        value = display->text().toDouble();
-
+    if ( isHexMode ) {
+        llValue = (qlonglong) display->text().toULongLong( 0, 16 );
+        value = (long double) llValue;
+    }
+    else {
+        std::stringstream ss( display->text().toStdString() );
+        ss >> value;
+        //value = display->text().toDouble();
+    }
     return value;
 }
 
@@ -1040,25 +1047,28 @@ double Calculator::currentDisplayValue()
 // ---------------------------------------------------------------------------
 // setCurrentDisplayValue
 //
-// (Overloaded) Updates the display with the current value (either double or
-// long long), along with the alternate-representation field. The numbers will
+// (Overloaded) Updates the display with the current value (either long double or
+// qlonglong), along with the alternate-representation field. The numbers will
 // be formatted in decimal/hexadecimal as appropriate.
 //
-void Calculator::setCurrentDisplayValue( double value )
+void Calculator::setCurrentDisplayValue( long double value )
 {
     if ( isHexMode )
         display->setText( QString::number( (qlonglong) value, 16 ).toUpper() );
-    else
-        display->setText( QString::number( value ));
+    else {
+        std::stringstream ss;
+        ss << value;
+        display->setText( QString::fromStdString( ss.str() ));
+    }
     updateAltRepr();
 }
 
-void Calculator::setCurrentDisplayValue( long long value )
+void Calculator::setCurrentDisplayValue( qlonglong value )
 {
-    if ( value > 0xFFFFFFFF )
+    if ( llabs( value ) > 0xFFFFFFFF )
         display->setText( QString::number( value, isHexMode? 16: 10 ).toUpper() );
     else
-        display->setText( QString::number( (long)value, isHexMode? 16: 10 ).toUpper() );
+        display->setText( QString::number( (qint32)value, isHexMode? 16: 10 ).toUpper() );
     updateAltRepr();
 }
 
@@ -1079,7 +1089,7 @@ void Calculator::abortOperation()
 //
 // This method performs all two-operand calculation operations.
 //
-bool Calculator::calculate( double rightOperand, const QString &pendingOperator )
+bool Calculator::calculate( long double rightOperand, const QString &pendingOperator )
 {
     if ( pendingOperator == "+") {                          // add
         sumSoFar += rightOperand;
@@ -1138,7 +1148,7 @@ QString Calculator::findFont( const QString fontFamily )
 //
 void Calculator::updateAltRepr()
 {
-    long long llValue;
+    qulonglong llValue;
     char achRepr[ 17 ] = {0};
     bool ok;
 
@@ -1149,7 +1159,7 @@ void Calculator::updateAltRepr()
             if ( llValue > 0xFFFFFFFF )
                 sprintf( achRepr, "%lld", llValue );
             else
-                sprintf( achRepr, "%ld", (long)llValue );
+                sprintf( achRepr, "%d", (qint32)llValue );
         }
     }
     else {
@@ -1158,7 +1168,7 @@ void Calculator::updateAltRepr()
             if ( llValue > 0xFFFFFFFF )
                 sprintf( achRepr, "%016llX", llValue );
             else
-                sprintf( achRepr, "%08lX", (long)llValue );
+                sprintf( achRepr, "%08X", (qint32)llValue );
         }
     }
     if ( ok )
