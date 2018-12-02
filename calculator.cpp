@@ -133,8 +133,8 @@ Calculator::Calculator( QWidget *parent )
                                       SLOT( digitClicked() ));
     }
 
-    pointButton      = createButton( tr("."),           ".",      ".",  SLOT( pointClicked() ));
-    changeSignButton = createButton( tr("\261"),        "+-",     SLOT( changeSignClicked() ));
+    pointButton      = createButton( tr("."),           ".",      ".",       SLOT( pointClicked() ));
+    changeSignButton = createButton( tr("\261"),        "+-",     "Shift+-", SLOT( changeSignClicked() ));
 
     clearMemoryButton = createButton( tr("MC"),         "MC",     SLOT( clearMemory() ));
     readMemoryButton  = createButton( tr("MR"),         "MR",     SLOT( readMemory() ));
@@ -146,35 +146,48 @@ Calculator::Calculator( QWidget *parent )
     minusButton      = createButton( trUtf8("−"),     "-",      "-", SLOT(additiveOperatorClicked() ));
     plusButton       = createButton( tr("+"),           "+",      "+", SLOT(additiveOperatorClicked() ));
 
-    moduloButton     = createButton( tr("Mod"),         "MOD",    SLOT( multiplicativeOperatorClicked() ));
+    moduloButton     = createButton( tr("Mod"),         "MOD",    "%", SLOT( multiplicativeOperatorClicked() ));
 
     equalButton      = createButton( tr("="),           "=",      QKeySequence( Qt::Key_Enter ), SLOT( equalClicked() ));
 
-    reciprocalButton = createButton( tr("1/x"),         "RECIPR", SLOT( unaryOperatorClicked() ));
-    squareButton     = createButton( tr("x\262"),       "SQUARE", SLOT( unaryOperatorClicked() ));
-    expButton        = createButton( trUtf8("xⁿ"),    "NEXP",   SLOT( exponentialOperatorClicked() ));
-    squareRootButton = createButton( trUtf8("√x"),    "SQRT",   SLOT( unaryOperatorClicked() ));
-    nRootButton      = createButton( trUtf8("ⁿ√x"), "NROOT",  SLOT( exponentialOperatorClicked() ));
-    piButton         = createButton( trUtf8("π"),      "PI",     SLOT( unaryOperatorClicked() ));
+    reciprocalButton = createButton( tr("1/x"),         "RECIPR", "Shift+R", SLOT( unaryOperatorClicked() ));
+    squareButton     = createButton( tr("x\262"),       "SQUARE", "Shift+S", SLOT( unaryOperatorClicked() ));
+    expButton        = createButton( trUtf8("xⁿ"),    "NEXP",   "Shift+X", SLOT( exponentialOperatorClicked() ));
+    squareRootButton = createButton( trUtf8("√x"),    "SQRT",   "Shift+Q", SLOT( unaryOperatorClicked() ));
+    nRootButton      = createButton( trUtf8("ⁿ√x"), "NROOT",  "Shift+T", SLOT( exponentialOperatorClicked() ));
+    piButton         = createButton( trUtf8("π"),      "PI",     "Shift+P",  SLOT( unaryOperatorClicked() ));
     sinButton        = createButton( tr("sin"),         "SIN",    SLOT( unaryOperatorClicked() ));
     cosButton        = createButton( tr("cos"),         "COS",    SLOT( unaryOperatorClicked() ));
     tanButton        = createButton( tr("tan"),         "TAN",    SLOT( unaryOperatorClicked() ));
     logButton        = createButton( tr("log"),         "LOG",    SLOT( unaryOperatorClicked() ));
     lnButton         = createButton( tr("ln"),          "LN",     SLOT( unaryOperatorClicked() ));
-    eButton          = createButton( trUtf8("e"),       "E",      SLOT( unaryOperatorClicked() ));
+    eButton          = createButton( trUtf8("e"),       "E",      "Shift+E", SLOT( unaryOperatorClicked() ));
 
-    bitLeftButton    = createButton( tr("<<"),          "<<",     SLOT( multiplicativeOperatorClicked() ));
-    bitRightButton   = createButton( tr(">>"),          ">>",     SLOT( multiplicativeOperatorClicked() ));
-    bitAndButton     = createButton( tr("&&"),          "&",      SLOT( multiplicativeOperatorClicked() ));
-    bitOrButton      = createButton( tr("|"),           "|",      SLOT( multiplicativeOperatorClicked() ));
-    bitXorButton     = createButton( tr("^"),           "^",      SLOT( multiplicativeOperatorClicked() ));
-    bitNotButton     = createButton( trUtf8("¬"),      "NOT",    SLOT( unaryOperatorClicked() ));
-    integerButton    = createButton( tr("Int"),         "INT",    SLOT( unaryOperatorClicked() ));
+    bitLeftButton    = createButton( tr("<<"),          "<<",     "Shift+>", SLOT( multiplicativeOperatorClicked() ));
+    bitRightButton   = createButton( tr(">>"),          ">>",     "Shift+<", SLOT( multiplicativeOperatorClicked() ));
+    bitAndButton     = createButton( tr("&&"),          "&",      "Shift+&", SLOT( multiplicativeOperatorClicked() ));
+    bitOrButton      = createButton( tr("|"),           "|",      "Shift+|", SLOT( multiplicativeOperatorClicked() ));
+    bitXorButton     = createButton( tr("^"),           "^",      "Shift+^", SLOT( multiplicativeOperatorClicked() ));
+    bitNotButton     = createButton( trUtf8("¬"),      "NOT",    "Shift+~", SLOT( unaryOperatorClicked() ));
+    integerButton    = createButton( tr("Int"),         "INT",    "\\",      SLOT( unaryOperatorClicked() ));
 
     // Menu actions
     //
+    menuBar = new QMenuBar();
 
-    styleMenu = new QMenu( tr("&Appearance"), this );
+    fileMenu = menuBar->addMenu( tr("&File"));
+    editMenu = menuBar->addMenu( tr("&Edit"));
+    viewMenu = menuBar->addMenu( tr("&View"));
+    helpMenu = menuBar->addMenu( tr("&Help"));
+
+    quitAction = new QAction( tr("E&xit"), this );
+    connect( quitAction, SIGNAL( triggered() ), this, SLOT( close() ));
+#ifdef __OS2__
+    quitAction->setShortcut( tr("F3") );
+#else
+    quitAction->setShortcut( QKeySequence::Quit );
+#endif
+    fileMenu->addAction( quitAction );
 
     displayFontAction = new QAction( tr("&Display font..."), this );
     connect( displayFontAction, SIGNAL( triggered() ), this, SLOT( displayFontChanged() ));
@@ -184,17 +197,46 @@ Calculator::Calculator( QWidget *parent )
     monochromeAction->setCheckable( true );
     connect( monochromeAction, SIGNAL( changed() ), this, SLOT( greyChanged() ));
 
-    onTopAction = new QAction( tr("Stay on &top"), this );
-    onTopAction->setCheckable( true );
-    connect( onTopAction, SIGNAL( changed() ), this, SLOT( onTopChanged() ));
-
-    aboutAction = new QAction( tr("Product &information"), this );
-    connect( aboutAction, SIGNAL( triggered() ), this, SLOT( about() ));
-
+    styleMenu = viewMenu->addMenu( tr("&Appearance"));
     styleMenu->addAction( displayFontAction );
     styleMenu->addAction( buttonFontAction );
     styleMenu->addSeparator();
     styleMenu->addAction( monochromeAction );
+
+    onTopAction = new QAction( tr("Stay on &top"), this );
+    onTopAction->setCheckable( true );
+    connect( onTopAction, SIGNAL( changed() ), this, SLOT( onTopChanged() ));
+#ifndef __OS2__
+    viewMenu->addSeparator();
+    viewMenu->addAction( onTopAction );
+#endif
+
+    copyAction = new QAction( tr("&Copy"), this );
+#ifdef __OS2__
+    QList<QKeySequence> copyShortcuts;
+    copyShortcuts << QKeySequence("Ctrl+Ins") << QKeySequence::Copy;
+    copyAction->setShortcuts( copyShortcuts );
+#else
+    copyAction->setShortcut( QKeySequence::Copy );
+#endif
+    connect( copyAction, SIGNAL( triggered() ), this, SLOT( copy() ));
+    pasteAction = new QAction( tr("&Paste"), this );
+#ifdef __OS2__
+    QList<QKeySequence> pasteShortcuts;
+    pasteShortcuts << QKeySequence("Shift+Ins") << QKeySequence::Paste;
+    pasteAction->setShortcuts( pasteShortcuts );
+#else
+    pasteAction->setShortcut( QKeySequence::Paste );
+#endif
+    connect( pasteAction, SIGNAL( triggered() ), this, SLOT( paste() ));
+
+    editMenu->addAction( copyAction );
+    editMenu->addAction( pasteAction );
+
+    aboutAction = new QAction( tr("Product &information"), this );
+    connect( aboutAction, SIGNAL( triggered() ), this, SLOT( about() ));
+
+    helpMenu->addAction( aboutAction );
 
     // Lay out the controls
     //
@@ -273,6 +315,8 @@ Calculator::Calculator( QWidget *parent )
     // Now the root-level layout
 
     QGridLayout *rootLayout = new QGridLayout;
+    rootLayout->setMenuBar( menuBar );
+
     rootLayout->addWidget( display, 0, 0, 1, 2 );
     rootLayout->addWidget( reprName, 1, 0 );
 //    rootLayout->addWidget( modeButton, 1, 0 );
@@ -877,9 +921,11 @@ void Calculator::closeEvent( QCloseEvent *event )
 }
 
 
+/*
 void Calculator::contextMenuEvent( QContextMenuEvent *event )
 {
     QMenu menu( this );
+    menu.addMenu( editMenu );
     menu.addMenu( styleMenu );
 #ifndef __OS2__
     menu.addAction( onTopAction );
@@ -891,8 +937,8 @@ void Calculator::contextMenuEvent( QContextMenuEvent *event )
     if ( isOnTop )
         WinSetWindowBits( menu.winId(), QWL_STYLE, WS_TOPMOST, WS_TOPMOST );
 #endif
-
 }
+*/
 
 
 void Calculator::keyPressEvent( QKeyEvent *event )
@@ -944,7 +990,7 @@ Button *Calculator::createButton( const QString &text,
                                   const char *member )
 {
     Button *button = createButton( text, identity, member );
-    button->setShortcut( key );
+    button->setShortcut( QKeySequence( key ));
     return button;
 }
 
@@ -1070,6 +1116,31 @@ void Calculator::setCurrentDisplayValue( qlonglong value )
     else
         display->setText( QString::number( (qint32)value, isHexMode? 16: 10 ).toUpper() );
     updateAltRepr();
+}
+
+
+// ---------------------------------------------------------------------------
+// copy
+//
+void Calculator::copy()
+{
+    QApplication::clipboard()->setText( display->text() );
+}
+
+
+// ---------------------------------------------------------------------------
+// paste
+//
+void Calculator::paste()
+{
+    long double value;
+    std::stringstream ss( QApplication::clipboard()->text().toStdString() );
+    ss >> value;
+    if ( waitingForOperand ) {
+        display->clear();
+        waitingForOperand = false;
+    }
+    setCurrentDisplayValue( value );
 }
 
 

@@ -46,6 +46,7 @@
 #define RAD_TO_DEG( x )     (x * ( 180 / M_PI ))
 
 QT_BEGIN_NAMESPACE
+class QMenuBar;
 class QLineEdit;
 class QLabel;
 class QComboBox;
@@ -63,7 +64,7 @@ public:
 
 protected:
     void closeEvent( QCloseEvent *event );
-    void contextMenuEvent( QContextMenuEvent *event );
+//    void contextMenuEvent( QContextMenuEvent *event );
     void keyPressEvent( QKeyEvent *event );
 
 private slots:
@@ -84,6 +85,8 @@ private slots:
     void setMemory();
     void addToMemory();
     void subFromMemory();
+    void copy();
+    void paste();
     void modeChanged( const QString &text );
     void viewChanged( const QString &text );
     void onTopChanged();
@@ -131,12 +134,22 @@ private:
     QComboBox *viewSelector;
     QGridLayout *sciLayout;
     QGridLayout *proLayout;
+
+    QMenuBar *menuBar;
+
+    QMenu   *fileMenu;
+    QMenu   *editMenu;
+    QMenu   *viewMenu;
     QMenu   *styleMenu;
+    QMenu   *helpMenu;
+    QAction *quitAction;
     QAction *monochromeAction;
     QAction *displayFontAction;
     QAction *buttonFontAction;
     QAction *onTopAction;
     QAction *aboutAction;
+    QAction *copyAction;
+    QAction *pasteAction;
 
     enum { NumDigitButtons = 10 };
     enum { NumHexButtons = 6 };
