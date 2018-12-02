@@ -21,7 +21,7 @@ A hexadecimal input mode is available.  However, real (floating point)
 numbers are not supported in hexadecimal mode.
 
 Mathematical order of operations is observed.  For example, entering 
-`5 [+] 2 [ž] 3 [x?] 3` will be evaluated as `5 + (2 ž 3ü)`, yielding a 
+`5 [+] 2 [Ã—] 3 [x?] 3` will be evaluated as `5 + (2 Ã— 3Â³)`, yielding a 
 result of `59`.  (Bitwise shifts are treated as multiplication operations 
 for this purpose.)
 
