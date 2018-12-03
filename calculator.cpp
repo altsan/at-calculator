@@ -116,8 +116,8 @@ Calculator::Calculator( QWidget *parent )
 
     // Create the action buttons
     //
-    clearAllButton   = createButton( tr("AC"),          "AC",     QKeySequence::DeleteEndOfWord,     SLOT( clearAll() ));
-    clearButton      = createButton( tr("CE"),          "CE",     QKeySequence::DeleteStartOfWord,   SLOT( clear() ));
+    clearAllButton   = createButton( tr("AC"),          "AC",     "Ctrl+Del",       SLOT( clearAll() ));
+    clearButton      = createButton( tr("CE"),          "CE",     "Ctrl+Backspace", SLOT( clear() ));
     backspaceButton  = createButton( trUtf8("← Back"),"BACK",   QKeySequence( Qt::Key_Backspace ), SLOT( backspaceClicked() ));
 
     for ( int i = 0; i < NumDigitButtons; ++i ) {
@@ -155,16 +155,16 @@ Calculator::Calculator( QWidget *parent )
     expButton        = createButton( trUtf8("xⁿ"),    "NEXP",   "Shift+X", SLOT( exponentialOperatorClicked() ));
     squareRootButton = createButton( trUtf8("√x"),    "SQRT",   "Shift+Q", SLOT( unaryOperatorClicked() ));
     nRootButton      = createButton( trUtf8("ⁿ√x"), "NROOT",  "Shift+T", SLOT( exponentialOperatorClicked() ));
-    piButton         = createButton( trUtf8("π"),      "PI",     "Shift+P",  SLOT( unaryOperatorClicked() ));
-    sinButton        = createButton( tr("sin"),         "SIN",    SLOT( unaryOperatorClicked() ));
-    cosButton        = createButton( tr("cos"),         "COS",    SLOT( unaryOperatorClicked() ));
-    tanButton        = createButton( tr("tan"),         "TAN",    SLOT( unaryOperatorClicked() ));
-    logButton        = createButton( tr("log"),         "LOG",    SLOT( unaryOperatorClicked() ));
-    lnButton         = createButton( tr("ln"),          "LN",     SLOT( unaryOperatorClicked() ));
+    piButton         = createButton( trUtf8("π"),      "PI",     "Shift+P", SLOT( unaryOperatorClicked() ));
+    sinButton        = createButton( tr("sin"),         "SIN",    "Ctrl+Alt+S", SLOT( unaryOperatorClicked() ));
+    cosButton        = createButton( tr("cos"),         "COS",    "Ctrl+Alt+C", SLOT( unaryOperatorClicked() ));
+    tanButton        = createButton( tr("tan"),         "TAN",    "Ctrl+Alt+T", SLOT( unaryOperatorClicked() ));
+    logButton        = createButton( tr("log"),         "LOG",    "Shift+L", SLOT( unaryOperatorClicked() ));
+    lnButton         = createButton( tr("ln"),          "LN",     "Shift+N", SLOT( unaryOperatorClicked() ));
     eButton          = createButton( trUtf8("e"),       "E",      "Shift+E", SLOT( unaryOperatorClicked() ));
 
-    bitLeftButton    = createButton( tr("<<"),          "<<",     "Shift+>", SLOT( multiplicativeOperatorClicked() ));
-    bitRightButton   = createButton( tr(">>"),          ">>",     "Shift+<", SLOT( multiplicativeOperatorClicked() ));
+    bitLeftButton    = createButton( tr("<<"),          "<<",     "Shift+<", SLOT( multiplicativeOperatorClicked() ));
+    bitRightButton   = createButton( tr(">>"),          ">>",     "Shift+>", SLOT( multiplicativeOperatorClicked() ));
     bitAndButton     = createButton( tr("&&"),          "&",      "Shift+&", SLOT( multiplicativeOperatorClicked() ));
     bitOrButton      = createButton( tr("|"),           "|",      "Shift+|", SLOT( multiplicativeOperatorClicked() ));
     bitXorButton     = createButton( tr("^"),           "^",      "Shift+^", SLOT( multiplicativeOperatorClicked() ));
