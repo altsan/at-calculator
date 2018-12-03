@@ -1235,11 +1235,16 @@ void Calculator::updateAltRepr()
     }
     else {
         llValue = display->text().toLongLong( &ok, 10 );
+        if ( !ok &&
+            ( sscanf( display->text().toLocal8Bit().data(), "%lld", &llValue ) == 1 ))
+            ok = true;
         if ( ok ) {
             if ( llValue > 0xFFFFFFFF )
                 sprintf( achRepr, "%016llX", llValue );
             else
                 sprintf( achRepr, "%08X", (qint32)llValue );
+        }
+        else {
         }
     }
     if ( ok )
