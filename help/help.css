@@ -1,0 +1,13 @@
+body {
+    font-face: sans-serif;
+}
+h1, h2, h3 {
+    display: none;
+}
+dt {
+    font-weight: bold;
+}
+dd, li {
+    margin-bottom: 1em;
+}
+
