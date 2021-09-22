@@ -34,7 +34,6 @@
 ** THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
-** $QT_END_LICENSE$
 **
 ****************************************************************************/
 
@@ -1078,13 +1077,15 @@ long double Calculator::currentDisplayValue()
     qlonglong llValue = 0;
 
     if ( isHexMode ) {
+        // TODO try and detect overflow and indicate an unrepresentable value
+        // (as it is, any value greater than 2^63 will be returned as modulo)
         llValue = (qlonglong) display->text().toULongLong( 0, 16 );
         value = (long double) llValue;
     }
     else {
+        // Need to use stringstream because there's no Qt toLongDouble() method
         std::stringstream ss( display->text().toStdString() );
         ss >> value;
-        //value = display->text().toDouble();
     }
     return value;
 }
@@ -1102,6 +1103,7 @@ void Calculator::setCurrentDisplayValue( long double value )
     if ( isHexMode )
         display->setText( QString::number( (qlonglong) value, 16 ).toUpper() );
     else {
+        // QString::number doesn't support long double, so use stringstream
         std::stringstream ss;
         ss << value;
         display->setText( QString::fromStdString( ss.str() ));

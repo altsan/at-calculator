@@ -10,8 +10,8 @@ functions.
 calculator. Refer to the following sections for information about using this
 program&colon.
 :ul compact.
-:li.:link res=100 reftype=hd.Calculator operation:elink.
-:li.:link res=200 reftype=hd.Keyboard commands:elink.
+:li.:link reftype=hd res=100.Calculator operation:elink.
+:li.:link reftype=hd res=200.Keyboard commands:elink.
 :eul.
 
 :p.Note that this program is not intended to serve as an advanced scientific
@@ -29,7 +29,7 @@ section for copyright and license details.
 
 
 .*****************************************************************************
-:h1 x=left y=bottom width=100% height=100% res=100.Calculator operation
+:h1 x=left y=bottom width=100% height=100% res=100.Calculator Operation
 :p.The calculator supports four display modes&colon.
 :dl compact tsize=20.
 :dt.Standard
@@ -155,7 +155,7 @@ such a number is entered) will have unpredictable results.
 
 
 .*****************************************************************************
-:h1 x=left y=bottom width=100% height=100% res=200.Keyboard commands
+:h1 x=left y=bottom width=100% height=100% res=200.Keyboard Commands
 :p.The following keyboard commands and shortcuts are supported.
 
 :dl compact tsize=20 break=fit.

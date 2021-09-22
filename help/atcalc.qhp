@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<QtHelpProject version="1.0">
+  <namespace>altsan.atcalc</namespace>
+  <virtualFolder>help</virtualFolder>
+  <filterSection>
+    <toc>
+      <section title="Desktop Calculator" ref="atcalc.1.html">
+      </section>
+      <section title="Calculator Operation" ref="atcalc.2.html">
+      </section>
+      <section title="Keyboard Commands" ref="atcalc.3.html">
+      </section>
+      <section title="Notices" ref="atcalc.4.html">
+      </section>
+    </toc>
+    <keywords>
+      <keyword name="Copyright" ref="atcalc.4.html"/>
+      <keyword name="Introduction" ref="atcalc.1.html"/>
+      <keyword name="Keys" ref="atcalc.3.html"/>
+      <keyword name="Keyboard" ref="atcalc.3.html"/>
+      <keyword name="License" ref="atcalc.4.html"/>
+      <keyword name="Shortcuts" ref="atcalc.3.html"/>
+    </keywords>
+    <files>
+      <file>help.css</file>
+      <file>atcalc.1.html</file>
+      <file>atcalc.2.html</file>
+      <file>atcalc.3.html</file>
+      <file>atcalc.4.html</file>
+    </files>
+  </filterSection>
+</QtHelpProject>
