@@ -4,7 +4,7 @@ os2:QMAKE_CFLAGS   = -Zomf -march=i686 -Wno-pointer-sign
 os2:QMAKE_CXXFLAGS = -Zomf -march=i686 -Wno-unused-local-typedefs -Wno-literal-suffix
 
 TEMPLATE = app
-
+TARGET = atcalc
 HEADERS       = button.h \
                 calculator.h
 SOURCES       = button.cpp \
