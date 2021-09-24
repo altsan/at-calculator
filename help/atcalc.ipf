@@ -1,7 +1,7 @@
 :userdoc.
 
 .*****************************************************************************
-:h1 x=left y=bottom width=100% height=100% res=001.Desktop Calculator
+:h1 x=left y=bottom width=100% height=100% res=001.AT Calculator
 :p.This is a simple desktop calculator which is designed to be easy to use. It
 supports a selection of standard, scientific, and programming (binary logic)
 functions.

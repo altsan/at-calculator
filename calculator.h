@@ -41,6 +41,17 @@
 #define CALCULATOR_H
 
 #include <QDialog>
+#include <QProcess>
+
+// Constants for QtAssistant-based cross-platform help
+#define HELP_HTML_ROOT      "qthelp://altsan.atcalc/help/"
+#define HELP_HTML_GENERAL   "atcalc.1.html"
+#define HELP_HTML_KEYS      "atcalc.3.html"
+
+// Constants for OS/2 native help
+#define HELP_PANEL_GENERAL        1
+#define HELP_PANEL_KEYS         200
+
 
 #define DEG_TO_RAD( x )     (x * ( M_PI / 180 ))
 #define RAD_TO_DEG( x )     (x * ( 180 / M_PI ))
@@ -61,6 +72,7 @@ class Calculator : public QDialog
 
 public:
     Calculator(QWidget *parent = 0);
+    ~Calculator();
 
 protected:
     void closeEvent( QCloseEvent *event );
@@ -93,6 +105,8 @@ private slots:
     void greyChanged();
     void buttonFontChanged();
     void displayFontChanged();
+    void showGeneralHelp();
+    void showKeysHelp();
     void about();
 
 private:
@@ -111,6 +125,8 @@ private:
     QString findFont( const QString fontFamily );
     void    readSettings();
     void    writeSettings();
+    void    createHelp();
+    void    launchAssistant( const QString &panel );
 
     long double sumInMemory;
     long double sumSoFar;
@@ -150,6 +166,8 @@ private:
     QAction *aboutAction;
     QAction *copyAction;
     QAction *pasteAction;
+    QAction *helpGeneralAction;
+    QAction *helpKeysAction;
 
     enum { NumDigitButtons = 10 };
     enum { NumHexButtons = 6 };
@@ -191,6 +209,12 @@ private:
     Button *bitLroButton;
     Button *bitRroButton;
     Button *integerButton;
+
+    // Program help (platform specific implementation)
+    void *helpInstance;
+
+    // QtAssistant process
+    QProcess *helpProcess;
 
 };
 

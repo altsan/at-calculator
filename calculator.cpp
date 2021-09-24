@@ -50,6 +50,10 @@
 #include <os2.h>
 #endif
 
+#ifdef __OS2__
+#include "os2native.h"
+#endif
+
 
 #include "version.h"
 #include "button.h"
@@ -232,9 +236,21 @@ Calculator::Calculator( QWidget *parent )
     editMenu->addAction( copyAction );
     editMenu->addAction( pasteAction );
 
+    helpGeneralAction = new QAction( tr("General &help"), this );
+    helpGeneralAction->setStatusTip( tr("General program help") );
+    helpGeneralAction->setShortcut( tr("F1") );
+    connect( helpGeneralAction, SIGNAL( triggered() ), this, SLOT( showGeneralHelp() ));
+
+    helpKeysAction = new QAction( tr("&Keys help"), this );
+    helpKeysAction->setStatusTip( tr("Help on keyboard commands") );
+    connect( helpKeysAction, SIGNAL( triggered() ), this, SLOT( showKeysHelp() ));
+
     aboutAction = new QAction( tr("Product &information"), this );
     connect( aboutAction, SIGNAL( triggered() ), this, SLOT( about() ));
 
+    helpMenu->addAction( helpGeneralAction );
+    helpMenu->addAction( helpKeysAction );
+    helpMenu->addSeparator();
     helpMenu->addAction( aboutAction );
 
     // Lay out the controls
@@ -334,6 +350,9 @@ Calculator::Calculator( QWidget *parent )
 
     setColourScheme();
 
+    helpInstance = NULL;
+    createHelp();
+
     // Combo-box selections
     modeSelector->setCurrentIndex( (int) isHexMode );
     for ( int i = 0; i < NumHexButtons; i++ )
@@ -358,6 +377,17 @@ Calculator::Calculator( QWidget *parent )
 
     display->setFocus( Qt::ActiveWindowFocusReason );
     setWindowTitle( tr("Calculator"));
+}
+
+
+// ---------------------------------------------------------------------------
+// DESTRUCTOR
+//
+Calculator::~Calculator()
+{
+#ifdef __OS2__
+    if ( helpInstance ) OS2Native::destroyNativeHelp( helpInstance );
+#endif
 }
 
 
@@ -892,6 +922,24 @@ void Calculator::displayFontChanged()
     }
 }
 
+void Calculator::showGeneralHelp()
+{
+#ifdef __OS2__
+    OS2Native::showHelpPanel( helpInstance, HELP_PANEL_GENERAL );
+#else
+    launchAssistant( HELP_HTML_GENERAL );
+#endif
+}
+
+
+void Calculator::showKeysHelp()
+{
+#ifdef __OS2__
+    OS2Native::showHelpPanel( helpInstance, HELP_PANEL_KEYS );
+#else
+    launchAssistant( HELP_HTML_KEYS );
+#endif
+}
 
 // ---------------------------------------------------------------------------
 // about
@@ -956,6 +1004,15 @@ void Calculator::keyPressEvent( QKeyEvent *event )
 // ===========================================================================
 // OTHER METHODS
 //
+
+void Calculator::createHelp()
+{
+#ifdef __OS2__
+    helpInstance = OS2Native::setNativeHelp( this, QString("atcalc.hlp"), tr("Calculator Help") );
+#else
+    helpProcess = new QProcess( this );
+#endif
+}
 
 // ---------------------------------------------------------------------------
 // createButton
@@ -1336,4 +1393,28 @@ void Calculator::writeSettings()
     settings.setValue("monochrome", isGrey );
 }
 
+
+// ---------------------------------------------------------------------------
+// launchAssistant
+//
+void Calculator::launchAssistant( const QString &panel )
+{
+    QString assistant = QLibraryInfo::location( QLibraryInfo::BinariesPath )
+                        + QLatin1String("/assistant");
+    QStringList args;
+    args << QLatin1String("-collectionFile")
+         << QLatin1String("atcalc.qhc")
+         << QLatin1String("-enableRemoteControl");
+    helpProcess->start( assistant, args );
+    if ( !helpProcess->waitForStarted() ) {
+        helpProcess->start( QLatin1String("assistant"), args );
+        if ( !helpProcess->waitForStarted() ) {
+            showMessage( tr("Help viewer not available."));
+            return;
+        }
+    }
+    QByteArray assistantInput;
+    assistantInput.append("setSource " + QString( HELP_HTML_ROOT ) + panel + QString("\n"));
+    helpProcess->write( assistantInput );
+}
 

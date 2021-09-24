@@ -12,6 +12,8 @@ SOURCES       = button.cpp \
                 main.cpp
 RESOURCES    += calculator.qrc
 
+os2:HEADERS += os2native.h
+os2:SOURCES += os2native.cpp
 os2:RC_FILE   = calculator.rc
 win32:RC_FILE = calculator_win.rc
 

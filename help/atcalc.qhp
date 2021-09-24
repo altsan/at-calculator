@@ -22,6 +22,12 @@
       <keyword name="Shortcuts" ref="atcalc.3.html"/>
     </keywords>
     <files>
+      <file>exponent.png</file>
+      <file>nroot.png</file>
+      <file>pi.png</file>
+      <file>reciprocal.png</file>
+      <file>sqroot.png</file>
+      <file>square.png</file>
       <file>help.css</file>
       <file>atcalc.1.html</file>
       <file>atcalc.2.html</file>

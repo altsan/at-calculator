@@ -46,3 +46,18 @@ target_wrapper.*
 
 # QtCreator CMake
 CMakeLists.txt.user*
+
+# Other compiled binaries
+*.[Hh][Ll][Pp]
+*.[Ii][Nn][Ff]
+*.[Qq][Cc][Hh]
+*.[Qq][Hh][Cc]
+*.[Mm][Aa][Pp]
+
+# Other temporary workspace files
+*.[Bb][Aa][Kk]
+*.[Ll][Oo][Gg]
+*.[Zz][Ii][Pp]
+*.tar.gz
+*.diff
+test*.txt
