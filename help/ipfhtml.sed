@@ -10,7 +10,8 @@ s/&gt./\&gt;/g
 s/&colon\./:/g
 s/&osq\./\&#x2018;/g
 s/&csq\./\&#x2019;/g
-s/&asterisk\./\&ast;/g
+s/&asterisk\./\*/g
+s/&per\./\./g
 s/&mdash\./\&mdash;/g
 s/&ndash\./\&ndash;/g
 s/&minus\./\&#x2212;/g
