@@ -949,7 +949,7 @@ void Calculator::about()
     QMessageBox::about( this,
                         tr("Product Information"),
                         tr("<b>AT Desktop Calculator</b><br>Version %1<hr>"
-                           "<p>Copyright &copy; 2018 Alexander Taylor.<br>"
+                           "<p>Copyright &copy; 2018,2021 Alexander Taylor.<br>"
                            "Copyright &copy; 2011 Nokia Corporation and/or its subsidiaries.<br>"
                            "All rights reserved."
                            "<br></p>").arg( VER_FILEVERSION_STR )
