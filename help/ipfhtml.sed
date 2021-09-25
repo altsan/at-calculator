@@ -32,18 +32,18 @@ s/:dd\./<dd>/g
 s/\.br[[:blank:]]*$/<br>/g
 s/\.ce (.*)$/<p align="center">\1<\/p>/g
 s/\.im (.*)$/<!-- include file: \1 -->/g
-s/:h1.* id=([a-zA-Z0-9]*)[^.]*\.(.*)/<!-- begin section l1 -->\n<a name="\1"><\/a><h1>\2<\/h1>/g
-s/:h1.* res=([0-9]*)[^.]*\.(.*)/<!-- begin section l1 -->\n<a name="\1"><\/a><h1>\2<\/h1>/g
-s/:h1[^.]*\.(.*)/<!-- begin section l1 -->\n<h1>\1<\/h1>/g
-s/:h2.* id=([a-zA-Z0-9]*)[^.]*\.(.*)/<!-- begin section l2 -->\n<a name="\1"><\/a><h2>\2<\/h2>/g
-s/:h2.* res=([0-9]*)[^.]*\.(.*)/<!-- begin section l2 -->\n<a name="\1"><\/a><h2>\2<\/h2>/g
-s/:h2[^.]*\.(.*)/<!-- begin section l2 -->\n<h2>\1<\/h2>/g
-s/:h3.* id=([a-zA-Z0-9]*)[^.]*\.(.*)/<!-- begin section l3 -->\n<a name="\1"><\/a><h3>\2<\/h3>/g
-s/:h3.* res=([0-9]*)[^.]*\.(.*)/<!-- begin section l3 -->\n<a name="\1"><\/a><h3>\2<\/h3>/g
-s/:h3[^.]*\.(.*)/<!-- begin section l3 -->\n<h3>\1<\/h3>/g
-s/:h4.* id=([a-zA-Z0-9]*)[^.]*\.(.*)/<hr>\n<a name="\1"><\/a><h4>\2<\/h4>/g
-s/:h4.* res=([0-9]*)[^.]*\.(.*)/<hr>\n<a name="\1"><\/a><h4>\2<\/h4>/g
-s/:h4[^.]*\.(.*)/<hr>\n<h4>\1<\/h4>/g
+s/^:h1.* id=([a-zA-Z0-9]*)[^.]*\.(.*)/<!-- begin section l1 -->\n<a name="\1"><\/a><h1>\2<\/h1>/g
+s/^:h1.* res=([0-9]*)[^.]*\.(.*)/<!-- begin section l1 -->\n<a name="\1"><\/a><h1>\2<\/h1>/g
+s/^:h1[^.]*\.(.*)/<!-- begin section l1 -->\n<h1>\1<\/h1>/g
+s/^:h2.* id=([a-zA-Z0-9]*)[^.]*\.(.*)/<!-- begin section l2 -->\n<a name="\1"><\/a><h2>\2<\/h2>/g
+s/^:h2.* res=([0-9]*)[^.]*\.(.*)/<!-- begin section l2 -->\n<a name="\1"><\/a><h2>\2<\/h2>/g
+s/^:h2[^.]*\.(.*)/<!-- begin section l2 -->\n<h2>\1<\/h2>/g
+s/^:h3.* id=([a-zA-Z0-9]*)[^.]*\.(.*)/<!-- begin section l3 -->\n<a name="\1"><\/a><h3>\2<\/h3>/g
+s/^:h3.* res=([0-9]*)[^.]*\.(.*)/<!-- begin section l3 -->\n<a name="\1"><\/a><h3>\2<\/h3>/g
+s/^:h3[^.]*\.(.*)/<!-- begin section l3 -->\n<h3>\1<\/h3>/g
+s/^:h4.* id=([a-zA-Z0-9]*)[^.]*\.(.*)/<hr>\n<a name="\1"><\/a><h4>\2<\/h4>/g
+s/^:h4.* res=([0-9]*)[^.]*\.(.*)/<hr>\n<a name="\1"><\/a><h4>\2<\/h4>/g
+s/^:h4[^.]*\.(.*)/<hr>\n<h4>\1<\/h4>/g
 s/:fn.* id=(.*)\./<!-- begin footnote -->\n<a name="\1"><\/a><div class="footnote">/g
 s/:efn\./<\/div>\n<!-- end footnote -->/g
 s/:xmp\./<pre>/g
