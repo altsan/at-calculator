@@ -1409,13 +1409,13 @@ void Calculator::launchAssistant( const QString &panel )
     if ( !helpProcess->waitForStarted() ) {
         helpProcess->start( QLatin1String("assistant"), args );
         if ( !helpProcess->waitForStarted() ) {
-            QMessageBox::error( this,
-                                tr("Help viewer not available."),
-                                tr("QtAssistant could not be opened. To view program help, ensure that "
-                                   "QtAssistant is installed and available in the program directory or "
-                                   "in your system path."),
-                                QMessageBox::Ok
-                              );
+            QMessageBox::warning( this,
+								  tr("Help viewer not available."),
+								  tr("QtAssistant could not be opened. To view program help, ensure that "
+									 "QtAssistant is installed and available in the program directory or "
+									 "in your system path."),
+								  QMessageBox::Ok
+								);
             return;
         }
     }
