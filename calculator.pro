@@ -17,3 +17,12 @@ os2:SOURCES += os2native.cpp
 os2:RC_FILE   = calculator.rc
 win32:RC_FILE = calculator_win.rc
 
+TRANSLATIONS = 	language/atcalc_de.ts \
+		language/atcalc_es.ts \
+		language/atcalc_fr.ts \
+		language/atcalc_it.ts \
+		language/atcalc_ja.ts \
+		language/atcalc_nl.ts \
+		language/atcalc_ru.ts \
+		language/atcalc_zh_cn.ts \
+		language/atcalc_zh_tw.ts
