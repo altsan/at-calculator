@@ -1,7 +1,7 @@
 CONFIG += map
 
 os2:QMAKE_CFLAGS   = -Zomf -march=i686 -Wno-pointer-sign
-os2:QMAKE_CXXFLAGS = -Zomf -march=i686 -Wno-unused-local-typedefs -Wno-literal-suffix
+os2:QMAKE_CXXFLAGS = -Zomf -march=i686 -Wno-unused-local-typedefs -Wno-literal-suffix -D OS2EMX_PLAIN_CHAR
 
 TEMPLATE = app
 TARGET = atcalc
