@@ -38,12 +38,29 @@
 ****************************************************************************/
 
 #include <QApplication>
+#include <QLocale>
+#include <QTextCodec>
+#include <QTranslator>
 
 #include "calculator.h"
 
 int main( int argc, char *argv[] )
 {
     QApplication app( argc, argv );
+    QString locale = QLocale::system().name();
+    QTranslator translator;
+
+    QTextCodec::setCodecForTr( QTextCodec::codecForName("utf8"));
+    if ( !translator.load( QString("atcalc_") + locale )) {
+#ifdef __OS2__
+        char *pszEnv = getenv("UNIXROOT");
+        translator.load( QString("atcalc_") + locale, QString("%1/usr/share/atcalc/locale").arg( pszEnv ));
+#else
+        translator.load( QString("atcalc_") + locale, QString("/usr/share/atcalc/locale"));
+#endif
+    }
+    app.installTranslator( &translator );
+
     Calculator calc;
     calc.show();
     return app.exec();
