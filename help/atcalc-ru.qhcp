@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<QHelpCollectionProject version="1.0">
+  <assistant>
+    <title>AT Калькулятор</title>
+    <applicationIcon>../images/calc_16.png</applicationIcon>
+    <cacheDirectory>altsan/atcalc</cacheDirectory>
+    <startPage>qthelp://altsan.atcalc/help/atcalc.1.html</startPage>
+    <enableDocumentationManager>false</enableDocumentationManager>
+    <enableAddressBar>false</enableAddressBar>
+    <enableFilterFunctionality>false</enableFilterFunctionality>
+  </assistant>
+  <docFiles>
+    <generate>
+      <file>
+        <input>atcalc.qhp</input>
+        <output>atcalc.qch</output>
+      </file>
+    </generate>
+    <register>
+      <file>atcalc.qch</file>
+    </register>
+  </docFiles>
+</QHelpCollectionProject>
+

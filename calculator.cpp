@@ -119,9 +119,9 @@ Calculator::Calculator( QWidget *parent )
 
     // Create the action buttons
     //
-    clearAllButton   = createButton( tr("AC"),       "AC",   "Ctrl+Del",       SLOT( clearAll() ));
-    clearButton      = createButton( tr("CE"),       "CE",   "Ctrl+Backspace", SLOT( clear() ));
-    backspaceButton  = createButton( tr("← Back"), "BACK", QKeySequence( Qt::Key_Backspace ), SLOT( backspaceClicked() ));
+    clearAllButton   = createButton( tr("AC"),           "AC",   "Ctrl+Del",       SLOT( clearAll() ));
+    clearButton      = createButton( tr("CE"),           "CE",   "Ctrl+Backspace", SLOT( clear() ));
+    backspaceButton  = createButton( trUtf8("← Back"), "BACK", QKeySequence( Qt::Key_Backspace ), SLOT( backspaceClicked() ));
 
     for ( int i = 0; i < NumDigitButtons; ++i ) {
         digitButtons[i] = createButton( QString::number( i ),
@@ -137,16 +137,16 @@ Calculator::Calculator( QWidget *parent )
     }
 
     pointButton      = createButton( tr("."),           ".",      ".",       SLOT( pointClicked() ));
-    changeSignButton = createButton( tr("±"),          "+-",     "Shift+-", SLOT( changeSignClicked() ));
+    changeSignButton = createButton( trUtf8("±"),      "+-",     "Shift+-", SLOT( changeSignClicked() ));
 
     clearMemoryButton = createButton( tr("MC"),         "MC",     SLOT( clearMemory() ));
     readMemoryButton  = createButton( tr("MR"),         "MR",     SLOT( readMemory() ));
     setMemoryButton   = createButton( tr("MS"),         "MS",     SLOT( setMemory() ));
     addToMemoryButton = createButton( tr("M+"),         "M+",     SLOT( addToMemory() ));
 
-    divisionButton   = createButton( tr("÷"),          "/",      "/", SLOT(multiplicativeOperatorClicked() ));
-    timesButton      = createButton( tr("×"),          "*",      "*", SLOT(multiplicativeOperatorClicked() ));
-    minusButton      = createButton( tr("−"),         "-",      "-", SLOT(additiveOperatorClicked() ));
+    divisionButton   = createButton( trUtf8("÷"),      "/",      "/", SLOT(multiplicativeOperatorClicked() ));
+    timesButton      = createButton( trUtf8("×"),      "*",      "*", SLOT(multiplicativeOperatorClicked() ));
+    minusButton      = createButton( trUtf8("−"),     "-",      "-", SLOT(additiveOperatorClicked() ));
     plusButton       = createButton( tr("+"),           "+",      "+", SLOT(additiveOperatorClicked() ));
 
     moduloButton     = createButton( tr("Mod"),         "MOD",    "%", SLOT( multiplicativeOperatorClicked() ));
@@ -154,11 +154,11 @@ Calculator::Calculator( QWidget *parent )
     equalButton      = createButton( tr("="),           "=",      QKeySequence( Qt::Key_Enter ), SLOT( equalClicked() ));
 
     reciprocalButton = createButton( tr("1/x"),         "RECIPR", "Shift+R", SLOT( unaryOperatorClicked() ));
-    squareButton     = createButton( tr("x²"),         "SQUARE", "Shift+S", SLOT( unaryOperatorClicked() ));
-    expButton        = createButton( tr("xⁿ"),        "NEXP",   "Shift+X", SLOT( exponentialOperatorClicked() ));
-    squareRootButton = createButton( tr("√x"),        "SQRT",   "Shift+Q", SLOT( unaryOperatorClicked() ));
-    nRootButton      = createButton( tr("ⁿ√x"),     "NROOT",  "Shift+T", SLOT( exponentialOperatorClicked() ));
-    piButton         = createButton( tr("π"),          "PI",     "Shift+P", SLOT( unaryOperatorClicked() ));
+    squareButton     = createButton( trUtf8("x²"),     "SQUARE", "Shift+S", SLOT( unaryOperatorClicked() ));
+    expButton        = createButton( trUtf8("xⁿ"),    "NEXP",   "Shift+X", SLOT( exponentialOperatorClicked() ));
+    squareRootButton = createButton( trUtf8("√x"),    "SQRT",   "Shift+Q", SLOT( unaryOperatorClicked() ));
+    nRootButton      = createButton( trUtf8("ⁿ√x"), "NROOT",  "Shift+T", SLOT( exponentialOperatorClicked() ));
+    piButton         = createButton( trUtf8("π"),      "PI",     "Shift+P", SLOT( unaryOperatorClicked() ));
     sinButton        = createButton( tr("sin"),         "SIN",    "Ctrl+Alt+S", SLOT( unaryOperatorClicked() ));
     cosButton        = createButton( tr("cos"),         "COS",    "Ctrl+Alt+C", SLOT( unaryOperatorClicked() ));
     tanButton        = createButton( tr("tan"),         "TAN",    "Ctrl+Alt+T", SLOT( unaryOperatorClicked() ));
@@ -171,7 +171,7 @@ Calculator::Calculator( QWidget *parent )
     bitAndButton     = createButton( tr("&&"),          "&",      "Shift+&", SLOT( multiplicativeOperatorClicked() ));
     bitOrButton      = createButton( tr("|"),           "|",      "Shift+|", SLOT( multiplicativeOperatorClicked() ));
     bitXorButton     = createButton( tr("^"),           "^",      "Shift+^", SLOT( multiplicativeOperatorClicked() ));
-    bitNotButton     = createButton( tr("¬"),          "NOT",    "Shift+~", SLOT( unaryOperatorClicked() ));
+    bitNotButton     = createButton( trUtf8("¬"),      "NOT",    "Shift+~", SLOT( unaryOperatorClicked() ));
     integerButton    = createButton( tr("Int"),         "INT",    "\\",      SLOT( unaryOperatorClicked() ));
 
     // Menu actions

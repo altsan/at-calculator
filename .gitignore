@@ -12,6 +12,7 @@
 *.res
 *.sym
 *.exe
+*.qm
 
 # Qt-es
 object_script.*.Release

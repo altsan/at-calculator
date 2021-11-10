@@ -50,10 +50,20 @@
         <source>CE</source>
         <translation type="unfinished"></translation>
     </message>
+    <message utf8="true">
+        <location filename="../calculator.cpp" line="124"/>
+        <source>← Back</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../calculator.cpp" line="139"/>
         <location filename="../calculator.cpp" line="669"/>
         <source>.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <location filename="../calculator.cpp" line="140"/>
+        <source>±</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -76,6 +86,21 @@
         <source>M+</source>
         <translation type="unfinished"></translation>
     </message>
+    <message utf8="true">
+        <location filename="../calculator.cpp" line="147"/>
+        <source>÷</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <location filename="../calculator.cpp" line="148"/>
+        <source>×</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <location filename="../calculator.cpp" line="149"/>
+        <source>−</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <location filename="../calculator.cpp" line="150"/>
         <source>+</source>
@@ -94,6 +119,31 @@
     <message>
         <location filename="../calculator.cpp" line="156"/>
         <source>1/x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <location filename="../calculator.cpp" line="157"/>
+        <source>x²</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <location filename="../calculator.cpp" line="158"/>
+        <source>xⁿ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <location filename="../calculator.cpp" line="159"/>
+        <source>√x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <location filename="../calculator.cpp" line="160"/>
+        <source>ⁿ√x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message utf8="true">
+        <location filename="../calculator.cpp" line="161"/>
+        <source>π</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -151,59 +201,9 @@
         <source>^</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../calculator.cpp" line="124"/>
-        <source>â Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calculator.cpp" line="140"/>
-        <source>Â±</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calculator.cpp" line="147"/>
-        <source>Ã·</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calculator.cpp" line="148"/>
-        <source>Ã</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calculator.cpp" line="149"/>
-        <source>â</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calculator.cpp" line="157"/>
-        <source>xÂ²</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calculator.cpp" line="158"/>
-        <source>xâ¿</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calculator.cpp" line="159"/>
-        <source>âx</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calculator.cpp" line="160"/>
-        <source>â¿âx</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calculator.cpp" line="161"/>
-        <source>Ï</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+    <message utf8="true">
         <location filename="../calculator.cpp" line="174"/>
-        <source>Â¬</source>
+        <source>¬</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
