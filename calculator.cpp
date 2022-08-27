@@ -1008,7 +1008,7 @@ void Calculator::keyPressEvent( QKeyEvent *event )
 void Calculator::createHelp()
 {
 #ifdef __OS2__
-    helpInstance = OS2Native::setNativeHelp( this, QString("atcalc.hlp"), tr("Calculator Help") );
+    helpInstance = OS2Native::setNativeHelp( this, QString("atcalc"), tr("Calculator Help") );
 #else
     helpProcess = new QProcess( this );
 #endif

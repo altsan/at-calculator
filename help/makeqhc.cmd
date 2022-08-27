@@ -1,6 +1,14 @@
 /* REXX script
  * Generate the QtAssistant collection and compressed help files.
  */
-uxroot = VALUE('UNIXROOT',,'OS2ENVIRONMENT')
-uxroot'\usr\lib\qt4\bin\qcollectiongenerator atcalc.qhcp -o atcalc.qhc'
+PARSE ARG basename .
+IF basename == '' THEN basename = 'atcalc'
+PARSE SOURCE _os .
+IF _os == 'OS/2' THEN DO
+    uxroot = VALUE('UNIXROOT',,'OS2ENVIRONMENT')
+    qcg_cmd = uxroot'\usr\lib\qt4\bin\qcollectiongenerator'
+END
+ELSE qcg_cmd = 'qcollectiongenerator'
 
+ADDRESS CMD qcg_cmd basename'.qhcp -o' basename'.qhc'
+EXIT rc
