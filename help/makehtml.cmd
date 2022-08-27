@@ -2,18 +2,34 @@
  * Convert IPF help source into single-section HTML files.
  */
 SIGNAL ON NOVALUE
+PARSE ARG target
+IF target == '' THEN target = 'atcalc'
+
+PARSE VAR target . '_'langcode
+IF langcode <> '' THEN DO
+    encodings = 'IBM850 IBM866 SHIFT_JIS'
+    languages = 'es ru ja'
+    index = WORDPOS( langcode, languages )
+    enc = WORD( encodings, index )
+END
+ELSE enc = 'IBM850'
 
 CALL RxFuncAdd 'SysLoadFuncs', 'REXXUTIL', 'SysLoadFuncs'
 CALL SysLoadFuncs
 
 /* Pass 1: convert all IPF files into HTML files.
  */
-CALL SysFileTree '*.ipf', 'ipfs.', 'FO'
+IF target == '' THEN
+    CALL SysFileTree '*.ipf', 'ipfs.', 'FO'
+ELSE DO
+    ipfs.0 = 1
+    ipfs.1 = target'.ipf'
+END
 h = 0
 DO i = 1 TO ipfs.0
     lp = LASTPOS('.', ipfs.i )
     outfile = SUBSTR( ipfs.i, 1, lp ) || 'html'
-    'sed -r -f ipfhtml.sed' ipfs.i '>' outfile
+    'sed -r -f ipfhtml.sed' ipfs.i '|iconv -f' enc '-t UTF-8 >' outfile
     IF STREAM( outfile, 'C', 'QUERY EXISTS') <> '' THEN DO
         h = h + 1
         htms.h = outfile
@@ -40,7 +56,7 @@ DO i = 1 TO htms.0
                 CALL LINEOUT outfile
                 outfile = SUBSTR( htms.i, 1, lp ) || secs
                 CALL LINEOUT outfile, '<html>'
-                CALL LINEOUT outfile, '<head><link rel="stylesheet" type="text/css" href="help.css"></head><body>'
+                CALL LINEOUT outfile, '<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" type="text/css" href="help.css"></head><body>'
             END
             secs = secs + 1
         END
@@ -51,7 +67,7 @@ DO i = 1 TO htms.0
         CALL LINEOUT outfile, l
 
         IF l == '<html>' THEN
-            CALL LINEOUT outfile, '<head><link rel="stylesheet" type="text/css" href="help.css"></head><body>'
+            CALL LINEOUT outfile, '<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8>"<link rel="stylesheet" type="text/css" href="help.css"></head><body>'
 
         /* Save any target anchors found */
         IF POS('<a name=', l ) <> 0 THEN DO
