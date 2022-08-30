@@ -10,6 +10,7 @@ IF langcode <> '' THEN DO
     encodings = 'IBM850 IBM866 SHIFT_JIS'
     languages = 'es ru ja'
     index = WORDPOS( langcode, languages )
+    IF index < 1 THEN index = 1
     enc = WORD( encodings, index )
 END
 ELSE enc = 'IBM850'
