@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="es_ES">
+<TS version="2.0" language="es_ES" sourcelanguage="en">
 <context>
     <name>Calculator</name>
     <message>
         <location filename="../calculator.cpp" line="107"/>
         <source>Standard</source>
-        <translation type="unfinished"></translation>
+        <translation>Estándar</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="108"/>
         <location filename="../calculator.cpp" line="841"/>
         <source>Scientific</source>
-        <translation type="unfinished"></translation>
+        <translation>Científica</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="109"/>
         <location filename="../calculator.cpp" line="845"/>
         <source>Programming</source>
-        <translation type="unfinished"></translation>
+        <translation>Programación</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="110"/>
         <location filename="../calculator.cpp" line="849"/>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Todas</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="115"/>
@@ -149,7 +149,7 @@
     <message>
         <location filename="../calculator.cpp" line="162"/>
         <source>sin</source>
-        <translation type="unfinished"></translation>
+        <translation>sen</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="163"/>
@@ -214,27 +214,27 @@
     <message>
         <location filename="../calculator.cpp" line="181"/>
         <source>&amp;File</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Archivo</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="182"/>
         <source>&amp;Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Editar</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="183"/>
         <source>&amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ver</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="184"/>
         <source>&amp;Help</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ayuda</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="186"/>
         <source>E&amp;xit</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Salir</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="189"/>
@@ -244,47 +244,47 @@
     <message>
         <location filename="../calculator.cpp" line="195"/>
         <source>&amp;Display font...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuente de la &amp;pantalla...</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="197"/>
         <source>&amp;Button font...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuente de los &amp;botones...</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="199"/>
         <source>&amp;Grey buttons</source>
-        <translation type="unfinished"></translation>
+        <translation>Botones &amp;grises</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="203"/>
         <source>&amp;Appearance</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Apariencia</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="209"/>
         <source>Stay on &amp;top</source>
-        <translation type="unfinished"></translation>
+        <translation>Siempre en &amp;primer plano</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="217"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Copiar</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="226"/>
         <source>&amp;Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pegar</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="239"/>
         <source>General &amp;help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayuda &amp;general</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="240"/>
         <source>General program help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayuda general del programa</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="241"/>
@@ -294,22 +294,22 @@
     <message>
         <location filename="../calculator.cpp" line="244"/>
         <source>&amp;Keys help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayuda para &amp;teclas</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="245"/>
         <source>Help on keyboard commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayuda sobre las asignaciones de teclas</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="248"/>
         <source>Product &amp;information</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Información del producto</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="379"/>
         <source>Calculator</source>
-        <translation type="unfinished"></translation>
+        <translation>Calculadora</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="700"/>
@@ -319,17 +319,17 @@
     <message>
         <location filename="../calculator.cpp" line="950"/>
         <source>Product Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Información sobre el producto</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="951"/>
         <source>&lt;b&gt;AT Desktop Calculator&lt;/b&gt;&lt;br&gt;Version %1&lt;hr&gt;&lt;p&gt;Copyright &amp;copy; 2018,2021 Alexander Taylor.&lt;br&gt;Copyright &amp;copy; 2011 Nokia Corporation and/or its subsidiaries.&lt;br&gt;All rights reserved.&lt;br&gt;&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Calculadora de escritorio AT&lt;/b&gt;&lt;br&gt;Versión %1&lt;hr&gt;&lt;p&gt;Copyright &amp;copy; 2018,2021 Alexander Taylor.&lt;br&gt;Copyright &amp;copy; 2011 Nokia Corporation y/o sus subsidiarias.&lt;br&gt;Todos los derechos reservados.&lt;br&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="1011"/>
         <source>Calculator Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Ayuda de la calculadora</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="1213"/>
@@ -339,12 +339,12 @@
     <message>
         <location filename="../calculator.cpp" line="1414"/>
         <source>Help viewer not available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Visor de ayuda no disponible.</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="1415"/>
         <source>QtAssistant could not be opened. To view program help, ensure that QtAssistant is installed and available in the program directory or in your system path.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se ha podido abrir QtAssistant. Para ver la ayuda del programa, asegúrese de que QtAssistant está instalado y disponible en el directorio del programa o la variable PATH del sistema.</translation>
     </message>
 </context>
 </TS>

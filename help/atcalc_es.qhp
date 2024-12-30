@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<QtHelpProject version="1.0">
+  <namespace>altsan.atcalc</namespace>
+  <virtualFolder>help</virtualFolder>
+  <filterSection>
+    <toc>
+      <section title="Calculadora de escritorio" ref="atcalc_es.1.html">
+      </section>
+      <section title="Operar con la calculadora" ref="atcalc_es.2.html">
+      </section>
+      <section title="Asignaciones de teclas" ref="atcalc_es.3.html">
+      </section>
+      <section title="Información" ref="atcalc.4.html">
+      </section>
+    </toc>
+    <keywords>
+      <keyword name="Copyright" ref="atcalc_es.4.html"/>
+      <keyword name="Introducción" ref="atcalc_es.1.html"/>
+      <keyword name="Teclas" ref="atcalc_es.3.html"/>
+      <keyword name="Teclado" ref="atcalc_es.3.html"/>
+      <keyword name="Licencia" ref="atcalc_es.4.html"/>
+      <keyword name="Combinaciones de teclas" ref="atcalc_es.3.html"/>
+    </keywords>
+    <files>
+      <file>exponent.png</file>
+      <file>nroot.png</file>
+      <file>pi.png</file>
+      <file>reciprocal.png</file>
+      <file>sqroot.png</file>
+      <file>square.png</file>
+      <file>help.css</file>
+      <file>atcalc_es.1.html</file>
+      <file>atcalc_es.2.html</file>
+      <file>atcalc_es.3.html</file>
+      <file>atcalc_es.4.html</file>
+    </files>
+  </filterSection>
+</QtHelpProject>

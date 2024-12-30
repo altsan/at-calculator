@@ -323,7 +323,7 @@
     </message>
     <message>
         <location filename="../calculator.cpp" line="951"/>
-        <source>&lt;b&gt;AT Desktop Calculator&lt;/b&gt;&lt;br&gt;Version %1&lt;hr&gt;&lt;p&gt;Copyright &amp;copy; 2018,2021 Alexander Taylor.&lt;br&gt;Copyright &amp;copy; 2011 Nokia Corporation and/or its subsidiaries.&lt;br&gt;All rights reserved.&lt;br&gt;&lt;/p&gt;</source>
+        <source>&lt;b&gt;AT Desktop Calculator&lt;/b&gt;&lt;br&gt;Version %1&lt;hr&gt;&lt;p&gt;Copyright &amp;copy; 2018,2022 Alexander Taylor.&lt;br&gt;Copyright &amp;copy; 2011 Nokia Corporation and/or its subsidiaries.&lt;br&gt;All rights reserved.&lt;br&gt;&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

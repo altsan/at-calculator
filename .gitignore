@@ -62,3 +62,4 @@ CMakeLists.txt.user*
 *.tar.gz
 *.diff
 test*.txt
+help/*.html
