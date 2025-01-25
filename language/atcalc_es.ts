@@ -30,7 +30,7 @@
         <location filename="../calculator.cpp" line="115"/>
         <location filename="../calculator.cpp" line="407"/>
         <source>Decimal</source>
-        <translation type="unfinished"></translation>
+        <translation>Decimal</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="116"/>
@@ -38,7 +38,7 @@
         <location filename="../calculator.cpp" line="409"/>
         <location filename="../calculator.cpp" line="814"/>
         <source>Hexadecimal</source>
-        <translation type="unfinished"></translation>
+        <translation>Hexadecimal</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="122"/>
@@ -229,7 +229,7 @@
     <message>
         <location filename="../calculator.cpp" line="184"/>
         <source>&amp;Help</source>
-        <translation>&amp;Ayuda</translation>
+        <translation>A&amp;yuda</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="186"/>
@@ -239,7 +239,7 @@
     <message>
         <location filename="../calculator.cpp" line="189"/>
         <source>F3</source>
-        <translation type="unfinished"></translation>
+        <translation>F3</translation>
     </message>
     <message>
         <location filename="../calculator.cpp" line="195"/>
